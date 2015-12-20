@@ -1,0 +1,16 @@
+
+build.gradle
+
+*.class
+
+.project
+
+.gradle/
+
+bin/
+
+build/
+
+.settings/
+
+.classpath
