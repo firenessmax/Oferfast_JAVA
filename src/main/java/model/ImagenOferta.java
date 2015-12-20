@@ -10,7 +10,7 @@ public class ImagenOferta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id", unique=true, nullable=false)
+	@Column(name="imagen_oferta_id", unique=true, nullable=false)
 	private int imagenOfertaId;
 	
 	@Column(name="url_normal", nullable=false, length=255)

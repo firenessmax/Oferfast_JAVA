@@ -10,7 +10,7 @@ public class Etiqueta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id", unique=true, nullable=false)
+	@Column(name="etiqueta_id", unique=true, nullable=false)
 	private int etiquetaId;
 
 	@Column(name="name", nullable=false, length=45)
