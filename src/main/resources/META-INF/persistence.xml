@@ -5,6 +5,8 @@
 	<persistence-unit name="oferfastPU" transaction-type="JTA">
 		<jta-data-source>jdbc/oferfast</jta-data-source>
 		<class>model.Oferta</class>
+		<class>model.Etiqueta</class>
+		<class>model.ImagenOferta</class>
 	</persistence-unit>
 
 </persistence>

@@ -21,7 +21,7 @@ public class ImagenOfertaService {
 	@EJB 
 	ImagenOfertaFacade imagenOfertaFacadeEJB;
 	
-	Logger logger = Logger.getLogger(EtiquetaService.class.getName());
+	Logger logger = Logger.getLogger(ImagenOfertaService.class.getName());
 	
 	@GET
 	@Produces({"application/xml", "application/json"})

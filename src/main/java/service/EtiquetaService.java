@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 
 import facade.EtiquetaFacade;
 import model.Etiqueta;
+import model.Oferta;
 
 @Path("/etiquetas")
 public class EtiquetaService {
@@ -34,6 +35,13 @@ public class EtiquetaService {
     @Produces({"application/xml", "application/json"})
     public Etiqueta find(@PathParam("id") Integer id) {
         return etiquetaFacadeEJB.find(id);
+    }
+    
+    @GET
+    @Path("{id}/ofertas")
+    @Produces({"application/xml", "application/json"})
+    public List<Oferta> find_ofertas(@PathParam("id") Integer id) {
+        return etiquetaFacadeEJB.find(id).getListaSoloOfertas();
     }
 	
 	@POST

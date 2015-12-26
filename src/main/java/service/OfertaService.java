@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import facade.OfertaFacade;
+import model.Etiqueta;
 import model.Oferta;
 
 @Path("/ofertas")
@@ -21,7 +22,7 @@ public class OfertaService {
 	@EJB 
 	OfertaFacade ofertaFacadeEJB;
 	
-	Logger logger = Logger.getLogger(EtiquetaService.class.getName());
+	Logger logger = Logger.getLogger(OfertaService.class.getName());
 	
 	@GET
 	@Produces({"application/xml", "application/json"})
@@ -34,6 +35,13 @@ public class OfertaService {
     @Produces({"application/xml", "application/json"})
     public Oferta find(@PathParam("id") Integer id) {
         return ofertaFacadeEJB.find(id);
+    }
+    
+    @GET
+    @Path("{id}/etiquetas")
+    @Produces({"application/xml", "application/json"})
+    public List<Etiqueta> find_etiquetas(@PathParam("id") Integer id) {
+        return ofertaFacadeEJB.find(id).getListaSoloEtiquetas();
     }
 	
 	@POST

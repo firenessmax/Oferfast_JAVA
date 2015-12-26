@@ -1,6 +1,9 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +21,12 @@ public class Etiqueta implements Serializable {
 
 	@Column(name="counter", nullable=false)
 	private int counter;
+
+	@Column(name="visible_etiqueta", nullable=false)
+	private boolean visibleEtiqueta;
+	
+	@OneToMany(mappedBy="etiqueta")
+	private List<OfertaHasEtiqueta> listaOfertas;
 
 	public Etiqueta() {
 	}
@@ -44,6 +53,45 @@ public class Etiqueta implements Serializable {
 
 	public void setCounter(int counter) {
 		this.counter = counter;
+	}
+
+	public boolean isVisibleEtiqueta() {
+		return visibleEtiqueta;
+	}
+
+	public void setVisibleEtiqueta(boolean visibleEtiqueta) {
+		this.visibleEtiqueta = visibleEtiqueta;
+	}
+
+	public List<OfertaHasEtiqueta> getListaOfertas() {
+		return listaOfertas;
+	}
+
+	public void setListaOfertas(List<OfertaHasEtiqueta> listaOfertas) {
+		this.listaOfertas = listaOfertas;
+	}
+
+	public OfertaHasEtiqueta addListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
+		getListaOfertas().add(laOfertaHasEtiqueta);
+		laOfertaHasEtiqueta.setEtiqueta(this);
+
+		return laOfertaHasEtiqueta;
+	}
+
+	public OfertaHasEtiqueta removeListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
+		getListaOfertas().remove(laOfertaHasEtiqueta);
+		laOfertaHasEtiqueta.setEtiqueta(null);
+
+		return laOfertaHasEtiqueta;
+	}
+	
+
+	public List<Oferta> getListaSoloOfertas() {
+		List<Oferta> listaAux = new ArrayList<Oferta>();
+		for(int i=0; i<getListaOfertas().size(); i++){
+			listaAux.add(getListaOfertas().get(i).getOferta());
+		}
+		return listaAux;
 	}
 	
 	
