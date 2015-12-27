@@ -48,6 +48,7 @@ public class OfertaService {
     @Consumes({"application/xml", "application/json"})
     public void create(Oferta entity) {
 		ofertaFacadeEJB.create(entity);
+		
     }
 
     @PUT

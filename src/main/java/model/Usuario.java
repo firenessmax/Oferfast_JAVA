@@ -38,10 +38,10 @@ public class Usuario {
 	private int permission;
 
 	@Column(name="url_profile_picture", nullable=false, length=255)
-	private String url_profile_picture;
+	private String urlProfilePicture;
 
 	@Column(name="url_profile_thumbnail", nullable=false, length=255)
-	private String url_profile_thumbnail;
+	private String urlProfileThumbnail;
 
 	@Column(name="visible_usuario", nullable=false)
 	private int visibleUsuario;
@@ -111,20 +111,20 @@ public class Usuario {
 		this.permission = permission;
 	}
 
-	public String getUrl_profile_picture() {
-		return url_profile_picture;
+	public String getUrlProfilePicture() {
+		return urlProfilePicture;
 	}
 
-	public void setUrl_profile_picture(String url_profile_picture) {
-		this.url_profile_picture = url_profile_picture;
+	public void setUrlProfilePicture(String urlProfilePicture) {
+		this.urlProfilePicture = urlProfilePicture;
 	}
 
-	public String getUrl_profile_thumbnail() {
-		return url_profile_thumbnail;
+	public String getUrlProfileThumbnail() {
+		return urlProfileThumbnail;
 	}
 
-	public void setUrl_profile_thumbnail(String url_profile_thumbnail) {
-		this.url_profile_thumbnail = url_profile_thumbnail;
+	public void setUrlProfileThumbnail(String urlProfileThumbnail) {
+		this.urlProfileThumbnail = urlProfileThumbnail;
 	}
 
 	public int isVisibleUsuario() {

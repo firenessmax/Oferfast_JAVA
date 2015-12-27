@@ -29,10 +29,10 @@ public class Oferta implements Serializable {
 	private int price;
 	
 	@Column(name="ubication_lon")
-	private Double ubicacionLon;
+	private Double ubicationLon;
 	
 	@Column(name="ubication_lat")
-	private Double ubicacionLat;
+	private Double ubicationLat;
 	
 	@Column(name="images_number", nullable=false)
 	private int imagesNumber;
@@ -91,20 +91,20 @@ public class Oferta implements Serializable {
 		this.price = price;
 	}
 
-	public Double getUbicacionLon() {
-		return ubicacionLon;
+	public Double getUbicationLon() {
+		return ubicationLon;
 	}
 
-	public void setUbicacionLon(Double ubicacionLon) {
-		this.ubicacionLon = ubicacionLon;
+	public void setUbicationLon(Double ubicacionLon) {
+		this.ubicationLon = ubicacionLon;
 	}
 
-	public Double getUbicacionLat() {
-		return ubicacionLat;
+	public Double getUbicationLat() {
+		return ubicationLat;
 	}
 
-	public void setUbicacionLat(Double ubicacionLat) {
-		this.ubicacionLat = ubicacionLat;
+	public void setUbicationLat(Double ubicacionLat) {
+		this.ubicationLat = ubicacionLat;
 	}
 
 	public int getImagesNumber() {
