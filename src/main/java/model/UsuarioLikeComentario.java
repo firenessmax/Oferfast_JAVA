@@ -23,7 +23,7 @@ public class UsuarioLikeComentario implements Serializable {
 	private int comentarioId;
 
 	@Column(name="positive", nullable=false)
-	private Boolean positive;
+	private int positive;
 
 	public UsuarioLikeComentario() {
 	}
@@ -44,11 +44,11 @@ public class UsuarioLikeComentario implements Serializable {
 		this.comentarioId = comentarioId;
 	}
 
-	public Boolean getPositive() {
+	public int getPositive() {
 		return positive;
 	}
 
-	public void setPositive(Boolean positive) {
+	public void setPositive(int positive) {
 		this.positive = positive;
 	}
 	

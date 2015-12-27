@@ -34,7 +34,7 @@ public class Comentario implements Serializable {
 	private Timestamp date;
 
 	@Column(name="visible_comentario", nullable=false)
-	private boolean visibleComentario;
+	private int visibleComentario;
 
 	@ManyToOne
 	@PrimaryKeyJoinColumn(name="oferta_id")
@@ -87,11 +87,11 @@ public class Comentario implements Serializable {
 		this.date = date;
 	}
 
-	public boolean isVisibleComentario() {
+	public int isVisibleComentario() {
 		return visibleComentario;
 	}
 
-	public void setVisibleComentario(boolean visibleComentario) {
+	public void setVisibleComentario(int visibleComentario) {
 		this.visibleComentario = visibleComentario;
 	}
 

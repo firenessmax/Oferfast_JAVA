@@ -34,7 +34,7 @@ public class Medalla implements Serializable {
 	private int backgroud;
 
 	@Column(name="visible_medalla", nullable=false)
-	private boolean visibleMedalla;
+	private int visibleMedalla;
 
 	public Medalla() {
 	}
@@ -87,11 +87,11 @@ public class Medalla implements Serializable {
 		this.backgroud = backgroud;
 	}
 
-	public boolean isVisibleMedalla() {
+	public int isVisibleMedalla() {
 		return visibleMedalla;
 	}
 
-	public void setVisibleMedalla(boolean visibleMedalla) {
+	public void setVisibleMedalla(int visibleMedalla) {
 		this.visibleMedalla = visibleMedalla;
 	}
 	

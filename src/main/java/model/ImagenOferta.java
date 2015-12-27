@@ -23,7 +23,7 @@ public class ImagenOferta implements Serializable {
 	private String urlThumbnail;
 
 	@Column(name="visible_imagen", nullable=false)
-	private boolean visibleImagen;
+	private int visibleImagen;
 
 	@ManyToOne
 	@PrimaryKeyJoinColumn(name="oferta_id")
@@ -56,11 +56,11 @@ public class ImagenOferta implements Serializable {
 		this.urlThumbnail = urlThumbnail;
 	}
 	
-	public boolean isVisibleImagen() {
+	public int isVisibleImagen() {
 		return visibleImagen;
 	}
 
-	public void setVisibleImagen(boolean visibleImagen) {
+	public void setVisibleImagen(int visibleImagen) {
 		this.visibleImagen = visibleImagen;
 	}
 

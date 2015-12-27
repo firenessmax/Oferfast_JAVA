@@ -41,7 +41,7 @@ public class Oferta implements Serializable {
 	private Timestamp date;
 
 	@Column(name="visible_oferta", nullable=false)
-	private boolean visibleOferta;
+	private int visibleOferta;
 	
 	@OneToMany(mappedBy="oferta")
 	private List<OfertaHasEtiqueta> listaEtiquetas;
@@ -50,7 +50,7 @@ public class Oferta implements Serializable {
 	private List<ImagenOferta> listaImagenes;
 	
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name="usuario_id")
+	@PrimaryKeyJoinColumn(name="usuario_id", referencedColumnName = "usuario_id")
 	private Usuario usuario;
 	
 	@OneToMany(mappedBy="oferta")
@@ -131,11 +131,11 @@ public class Oferta implements Serializable {
 		this.usuarioId = usuarioId;
 	}
 
-	public boolean isVisibleOferta() {
+	public int isVisibleOferta() {
 		return visibleOferta;
 	}
 
-	public void setVisibleOferta(boolean visibleOferta) {
+	public void setVisibleOferta(int visibleOferta) {
 		this.visibleOferta = visibleOferta;
 	}
 

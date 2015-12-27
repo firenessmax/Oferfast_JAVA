@@ -35,7 +35,7 @@ public class Configuracion implements Serializable {
 	private Time date;
 
 	@Column(name="visible_configuracion", nullable=false)
-	private boolean visibleConfiguracion;
+	private int visibleConfiguracion;
 
 	public Configuracion() {
 	}
@@ -88,11 +88,11 @@ public class Configuracion implements Serializable {
 		this.date = date;
 	}
 
-	public boolean isVisibleConfiguracion() {
+	public int isVisibleConfiguracion() {
 		return visibleConfiguracion;
 	}
 
-	public void setVisibleConfiguracion(boolean visibleConfiguracion) {
+	public void setVisibleConfiguracion(int visibleConfiguracion) {
 		this.visibleConfiguracion = visibleConfiguracion;
 	}
 	

@@ -44,7 +44,7 @@ public class Usuario {
 	private String url_profile_thumbnail;
 
 	@Column(name="visible_usuario", nullable=false)
-	private boolean visibleUsuario;
+	private int visibleUsuario;
 	
 	@OneToMany(mappedBy="usuario")
 	private List<Oferta> listaOfertas;
@@ -127,11 +127,11 @@ public class Usuario {
 		this.url_profile_thumbnail = url_profile_thumbnail;
 	}
 
-	public boolean isVisibleUsuario() {
+	public int isVisibleUsuario() {
 		return visibleUsuario;
 	}
 
-	public void setVisibleUsuario(boolean visibleUsuario) {
+	public void setVisibleUsuario(int visibleUsuario) {
 		this.visibleUsuario = visibleUsuario;
 	}
 

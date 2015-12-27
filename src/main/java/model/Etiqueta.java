@@ -23,7 +23,7 @@ public class Etiqueta implements Serializable {
 	private int counter;
 
 	@Column(name="visible_etiqueta", nullable=false)
-	private boolean visibleEtiqueta;
+	private int visibleEtiqueta;
 	
 	@OneToMany(mappedBy="etiqueta")
 	private List<OfertaHasEtiqueta> listaOfertas;
@@ -55,11 +55,11 @@ public class Etiqueta implements Serializable {
 		this.counter = counter;
 	}
 
-	public boolean isVisibleEtiqueta() {
+	public int isVisibleEtiqueta() {
 		return visibleEtiqueta;
 	}
 
-	public void setVisibleEtiqueta(boolean visibleEtiqueta) {
+	public void setVisibleEtiqueta(int visibleEtiqueta) {
 		this.visibleEtiqueta = visibleEtiqueta;
 	}
 
