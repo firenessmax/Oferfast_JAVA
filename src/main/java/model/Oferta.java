@@ -47,7 +47,7 @@ public class Oferta implements Serializable {
 	private int visibleOferta;
 	
 	@OneToMany(mappedBy="oferta")
-	private List<OfertaHasEtiqueta> listaEtiquetas;
+	private List<OfertaHasEtiqueta> listaOfertaHasEtiqueta;
 	
 	@OneToMany(mappedBy="oferta")
 	private List<ImagenOferta> listaImagenes;
@@ -194,23 +194,23 @@ public class Oferta implements Serializable {
 		return elComentario;
 	}	
 
-	public List<OfertaHasEtiqueta> getListaEtiquetas() {
-		return listaEtiquetas;
+	public List<OfertaHasEtiqueta> getListaOfertaHasEtiqueta() {
+		return listaOfertaHasEtiqueta;
 	}
 
-	public void setListaEtiquetas(List<OfertaHasEtiqueta> listaEtiquetas) {
-		this.listaEtiquetas = listaEtiquetas;
+	public void setListaOfertaHasEtiqueta(List<OfertaHasEtiqueta> listaOfertaHasEtiqueta) {
+		this.listaOfertaHasEtiqueta = listaOfertaHasEtiqueta;
 	}
 
-	public OfertaHasEtiqueta addListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaEtiquetas().add(laOfertaHasEtiqueta);
+	public OfertaHasEtiqueta addListaOfertaHasEtiqueta(OfertaHasEtiqueta laOfertaHasEtiqueta) {
+		getListaOfertaHasEtiqueta().add(laOfertaHasEtiqueta);
 		laOfertaHasEtiqueta.setOferta(this);
 
 		return laOfertaHasEtiqueta;
 	}
 
-	public OfertaHasEtiqueta removeListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaEtiquetas().remove(laOfertaHasEtiqueta);
+	public OfertaHasEtiqueta removeListaOfertaHasEtiqueta(OfertaHasEtiqueta laOfertaHasEtiqueta) {
+		getListaOfertaHasEtiqueta().remove(laOfertaHasEtiqueta);
 		laOfertaHasEtiqueta.setOferta(null);
 
 		return laOfertaHasEtiqueta;
@@ -222,8 +222,8 @@ public class Oferta implements Serializable {
 
 	public List<Etiqueta> getListaSoloEtiquetas() {
 		List<Etiqueta> listaAux = new ArrayList<Etiqueta>();
-		for(int i=0; i<getListaEtiquetas().size(); i++){
-			listaAux.add(getListaEtiquetas().get(i).getEtiqueta());
+		for(int i=0; i<getListaOfertaHasEtiqueta().size(); i++){
+			listaAux.add(getListaOfertaHasEtiqueta().get(i).getEtiqueta());
 		}
 		return listaAux;
 	}

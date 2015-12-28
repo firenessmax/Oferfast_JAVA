@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="etiqueta")
@@ -26,7 +31,7 @@ public class Etiqueta implements Serializable {
 	private int visibleEtiqueta;
 	
 	@OneToMany(mappedBy="etiqueta")
-	private List<OfertaHasEtiqueta> listaOfertas;
+	private List<OfertaHasEtiqueta> listaOfertaHasEtiqueta;
 
 	public Etiqueta() {
 	}
@@ -63,23 +68,23 @@ public class Etiqueta implements Serializable {
 		this.visibleEtiqueta = visibleEtiqueta;
 	}
 
-	public List<OfertaHasEtiqueta> getListaOfertas() {
-		return listaOfertas;
+	public List<OfertaHasEtiqueta> getListaOfertaHasEtiqueta() {
+		return listaOfertaHasEtiqueta;
 	}
 
-	public void setListaOfertas(List<OfertaHasEtiqueta> listaOfertas) {
-		this.listaOfertas = listaOfertas;
+	public void setListaOfertaHasEtiqueta(List<OfertaHasEtiqueta> listaOfertaHasEtiqueta) {
+		this.listaOfertaHasEtiqueta = listaOfertaHasEtiqueta;
 	}
 
 	public OfertaHasEtiqueta addListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaOfertas().add(laOfertaHasEtiqueta);
+		getListaOfertaHasEtiqueta().add(laOfertaHasEtiqueta);
 		laOfertaHasEtiqueta.setEtiqueta(this);
 
 		return laOfertaHasEtiqueta;
 	}
 
 	public OfertaHasEtiqueta removeListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaOfertas().remove(laOfertaHasEtiqueta);
+		getListaOfertaHasEtiqueta().remove(laOfertaHasEtiqueta);
 		laOfertaHasEtiqueta.setEtiqueta(null);
 
 		return laOfertaHasEtiqueta;
@@ -88,8 +93,8 @@ public class Etiqueta implements Serializable {
 
 	public List<Oferta> getListaSoloOfertas() {
 		List<Oferta> listaAux = new ArrayList<Oferta>();
-		for(int i=0; i<getListaOfertas().size(); i++){
-			listaAux.add(getListaOfertas().get(i).getOferta());
+		for(int i=0; i<getListaOfertaHasEtiqueta().size(); i++){
+			listaAux.add(getListaOfertaHasEtiqueta().get(i).getOferta());
 		}
 		return listaAux;
 	}

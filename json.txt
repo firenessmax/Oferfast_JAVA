@@ -60,3 +60,10 @@ JSON:
 }
 
 
+
+
+//OFERTA_HAS_ETIQUETA
+@GET
+/ofertaHasEtiqueta
+@GET (con id de oferta, se muestran todas sus etiquetas)
+/ofertaHasEtiqueta/{id}

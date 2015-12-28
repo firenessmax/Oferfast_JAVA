@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="oferta_has_etiqueta")
+@IdClass(OfertaHasEtiquetaPK.class)
 @NamedQuery(name="OfertaHasEtiqueta.findAll", query="SELECT ohe FROM OfertaHasEtiqueta ohe")
 public class OfertaHasEtiqueta implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,9 +33,6 @@ public class OfertaHasEtiqueta implements Serializable {
 	@ManyToOne
 	@PrimaryKeyJoinColumn(name="etiqueta_id", referencedColumnName = "etiqueta_id")
 	private Etiqueta etiqueta;
-
-	public OfertaHasEtiqueta() {
-	}
 
 	public int getOfertaId() {
 		return ofertaId;
