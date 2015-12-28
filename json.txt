@@ -5,6 +5,8 @@ JSON:
 /etiquetas
 @GET (con id)
 /etiquetas/{id}
+@GET (todas las ofertas de alguna etiqueta)
+/etiquetas/{id}/ofertas
 
 @POST
 {
@@ -67,3 +69,5 @@ JSON:
 /ofertaHasEtiqueta
 @GET (con id de oferta, se muestran todas sus etiquetas)
 /ofertaHasEtiqueta/{id}
+
+
