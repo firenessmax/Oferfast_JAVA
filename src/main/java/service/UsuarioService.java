@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import facade.UsuarioFacade;
+import model.Oferta;
 import model.Usuario;
 
 @Path("/usuarios")
@@ -20,6 +23,9 @@ public class UsuarioService {
 
 	@EJB 
 	UsuarioFacade usuarioFacadeEJB;
+
+	@PersistenceContext 
+	EntityManager em;
 	
 	Logger logger = Logger.getLogger(UsuarioService.class.getName());
 	
@@ -34,6 +40,14 @@ public class UsuarioService {
     @Produces({"application/xml", "application/json"})
     public Usuario find(@PathParam("id") Integer id) {
         return usuarioFacadeEJB.find(id);
+    }
+	
+    @GET
+    @Path("{id}/ofertas")
+    @Produces({"application/xml", "application/json"})
+    public List<Oferta> find_ofertas(@PathParam("id") Integer id) {
+        return em.createNamedQuery("Oferta.findByUserId", Oferta.class)
+        		.setParameter("usuarioId", id).getResultList();
     }
 	
 	@POST

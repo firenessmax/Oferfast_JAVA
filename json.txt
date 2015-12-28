@@ -1,0 +1,62 @@
+JSON:
+
+//ETIQUETAS
+@GET
+/etiquetas
+@GET (con id)
+/etiquetas/{id}
+
+@POST
+{
+	"name": "el_nombre",
+	"counter":0,
+	"visibleEtiqueta":1
+}
+
+
+
+
+
+//OFERTAS
+@GET
+/ofertas
+@GET (con id)
+/ofertas/{id}
+
+@POST
+{
+	"title": "title",
+	"description": "description",
+	"ubicationLon":0,
+	"ubicationLat":0,
+	"price":0,
+	"imagesNumber":0,
+	"visibleOferta":1
+	"usuarioId":1,
+}
+
+
+
+
+//USUARIOS
+@GET
+/usuarios
+@GET (con id)
+/usuarios/{id}
+@GET (todas las ofertas de alguien)
+/usuarios/{id}/ofertas
+
+@POST
+{
+	"username": "username",
+	"email": "email",
+	"password": "password",
+	"permission": 1,
+	"reputation": 1,
+	"type": 1,
+	"urlProfilePicture": "picture",
+	"urlProfileThumbnail": "thumbnail",
+	"visibleUsuario":1
+}
+
+
