@@ -45,9 +45,8 @@ public class UsuarioService {
     @GET
     @Path("{id}/ofertas")
     @Produces({"application/xml", "application/json"})
-    public List<Oferta> find_ofertas(@PathParam("id") Integer id) {
-        return em.createNamedQuery("Oferta.findByUserId", Oferta.class)
-        		.setParameter("usuarioId", id).getResultList();
+    public List<Oferta> findOfertas(@PathParam("id") Integer id) {
+        return usuarioFacadeEJB.findOfertas(id);
     }
 	
 	@POST

@@ -23,4 +23,10 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 		return this.em;
 	}
 
+	@Override
+	public List<Oferta> findOfertas(int id){
+		return em.createNamedQuery("Oferta.findByUsuario", Oferta.class)
+        		.setParameter("usuarioId", id).getResultList();
+	}
+
 }

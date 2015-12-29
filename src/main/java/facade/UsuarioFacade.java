@@ -18,6 +18,8 @@ public interface UsuarioFacade {
 
 	public List<Usuario> findRange(int[] range);
 
+	public List<Oferta> findOfertas(int id);
+
 	public int count();
 
 }
