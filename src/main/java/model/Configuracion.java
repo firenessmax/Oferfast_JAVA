@@ -6,12 +6,30 @@ import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="configuracion")
-@NamedQuery(name="Configuracion.findAll", query="SELECT c FROM Configuracion c")
+@NamedQueries({
+	@NamedQuery(name="Configuracion.findAll", query="SELECT c FROM Configuracion c"),
+	@NamedQuery(name="Configuracion.findById", query="SELECT c FROM Configuracion c WHERE c.configuracionId = :configuracionId"),
+	@NamedQuery(name="Configuracion.findByUsuario", query="SELECT c FROM Configuracion c WHERE c.usuarioId = :usuarioId"),
+	@NamedQuery(name="Configuracion.findByLanguage", query="SELECT c FROM Configuracion c WHERE c.language = :language"),
+	@NamedQuery(name="Configuracion.findByCountry", query="SELECT c FROM Configuracion c WHERE c.country = :country"),
+	@NamedQuery(name="Configuracion.findByNotification", query="SELECT c FROM Configuracion c WHERE c.notification = :notification"),
+	@NamedQuery(name="Configuracion.findByDate", query="SELECT c FROM Configuracion c WHERE c.date = :date"),
+	@NamedQuery(name="Configuracion.findByVisible", query="SELECT c FROM Configuracion c WHERE c.visibleConfiguracion = :visibleConfiguracion"),
+	
+	@NamedQuery(name="Configuracion.findByIdVisible", query="SELECT c FROM Configuracion c WHERE c.configuracionId = :configuracionId AND c.visibleConfiguracion = :visibleConfiguracion"),
+	@NamedQuery(name="Configuracion.findByUsuarioVisible", query="SELECT c FROM Configuracion c WHERE c.usuarioId = :usuarioId AND c.visibleConfiguracion = :visibleConfiguracion"),
+	@NamedQuery(name="Configuracion.findByLanguageVisible", query="SELECT c FROM Configuracion c WHERE c.language = :language AND c.visibleConfiguracion = :visibleConfiguracion"),
+	@NamedQuery(name="Configuracion.findByCountryVisible", query="SELECT c FROM Configuracion c WHERE c.country = :country AND c.visibleConfiguracion = :visibleConfiguracion"),
+	@NamedQuery(name="Configuracion.findByNotificationVisible", query="SELECT c FROM Configuracion c WHERE c.notification = :notification AND c.visibleConfiguracion = :visibleConfiguracion"),
+	@NamedQuery(name="Configuracion.findByDateVisible", query="SELECT c FROM Configuracion c WHERE c.date = :date AND c.visibleConfiguracion = :visibleConfiguracion")
+})
+
 public class Configuracion implements Serializable {
 	private static final long serialVersionUID = 1L;
 

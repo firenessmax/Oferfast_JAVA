@@ -5,7 +5,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="imagenOferta")
-@NamedQuery(name="ImagenOferta.findAll", query="SELECT io FROM ImagenOferta io")
+@NamedQueries({
+	@NamedQuery(name="ImagenOferta.findAll", query="SELECT io FROM ImagenOferta io"),
+	@NamedQuery(name="ImagenOferta.findById", query="SELECT io FROM ImagenOferta io WHERE io.imagenOfertaId = :imagenOfertaId"),
+	@NamedQuery(name="ImagenOferta.findByOferta", query="SELECT io FROM ImagenOferta io WHERE io.ofertaId = :ofertaId"),
+	
+	@NamedQuery(name="ImagenOferta.findByVisible", query="SELECT io FROM ImagenOferta io WHERE io.visibleImagen = :visibleImagen"),
+	@NamedQuery(name="ImagenOferta.findByIdVisible", query="SELECT io FROM ImagenOferta io WHERE io.imagenOfertaId = :imagenOfertaId AND io.visibleImagen = :visibleImagen"),
+	@NamedQuery(name="ImagenOferta.findByIdVisible", query="SELECT io FROM ImagenOferta io WHERE io.ofertaId = :ofertaId AND io.visibleImagen = :visibleImagen")
+})
+
 public class ImagenOferta implements Serializable {
 	private static final long serialVersionUID = 1L;
 

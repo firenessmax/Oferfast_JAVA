@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -14,7 +15,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name="oferta_has_etiqueta")
 @IdClass(OfertaHasEtiquetaPK.class)
-@NamedQuery(name="OfertaHasEtiqueta.findAll", query="SELECT ohe FROM OfertaHasEtiqueta ohe")
+@NamedQueries({
+	@NamedQuery(name="OfertaHasEtiqueta.findAll", query="SELECT ohe FROM OfertaHasEtiqueta ohe"),
+	@NamedQuery(name="OfertaHasEtiqueta.findOfertaByEtiqueta", query="SELECT ohe FROM OfertaHasEtiqueta ohe WHERE ohe.etiquetaId = :etiquetaId"),
+	@NamedQuery(name="OfertaHasEtiqueta.findEtiquetaByOferta", query="SELECT ohe FROM OfertaHasEtiqueta ohe WHERE ohe.ofertaId = :ofertaId")
+})
+
 public class OfertaHasEtiqueta implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

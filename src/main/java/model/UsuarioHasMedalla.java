@@ -6,11 +6,13 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity	
 @Table(name="usuario_has_medalla")
+@IdClass(UsuarioHasMedallaPK.class)
 @NamedQuery(name="UsuarioHasMedalla.findAll", query="SELECT uhm FROM UsuarioHasMedalla uhm")
 public class UsuarioHasMedalla implements Serializable {
 	private static final long serialVersionUID = 1L;

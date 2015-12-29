@@ -5,12 +5,28 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="medalla")
-@NamedQuery(name="Medalla.findAll", query="SELECT m FROM Medalla m")
+@NamedQueries({
+	@NamedQuery(name="Medalla.findAll", query="SELECT m FROM Medalla m"),
+	@NamedQuery(name="Medalla.ById", query="SELECT m FROM Medalla m WHERE m.medallaId = :medallaId"),
+	@NamedQuery(name="Medalla.ByName", query="SELECT m FROM Medalla m WHERE m.name = :name"),
+	@NamedQuery(name="Medalla.ByIcon", query="SELECT m FROM Medalla m WHERE m.icon = :icon"),
+	@NamedQuery(name="Medalla.ByColor", query="SELECT m FROM Medalla m WHERE m.color = :color"),
+	@NamedQuery(name="Medalla.ByBackgroud", query="SELECT m FROM Medalla m WHERE m.backgroud = :backgroud"),
+	
+	@NamedQuery(name="Medalla.ByVisible", query="SELECT m FROM Medalla m WHERE m.visibleMedalla = :visibleMedalla"),
+	@NamedQuery(name="Medalla.ByIdVisible", query="SELECT m FROM Medalla m WHERE m.medallaId = :medallaId AND m.visibleMedalla = :visibleMedalla"),
+	@NamedQuery(name="Medalla.ByNameVisible", query="SELECT m FROM Medalla m WHERE m.name = :name AND m.visibleMedalla = :visibleMedalla"),
+	@NamedQuery(name="Medalla.ByIconVisible", query="SELECT m FROM Medalla m WHERE m.icon = :icon AND m.visibleMedalla = :visibleMedalla"),
+	@NamedQuery(name="Medalla.ByColorVisible", query="SELECT m FROM Medalla m WHERE m.color = :color AND m.visibleMedalla = :visibleMedalla"),
+	@NamedQuery(name="Medalla.ByBackgroudVisible", query="SELECT m FROM Medalla m WHERE m.backgroud = :backgroud AND m.visibleMedalla = :visibleMedalla"),
+})
+
 public class Medalla implements Serializable {
 	private static final long serialVersionUID = 1L;
 

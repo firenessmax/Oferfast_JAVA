@@ -5,11 +5,13 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="usuario_like_comentario")
+@IdClass(UsuarioLikeComentarioPK.class)
 @NamedQuery(name="UsuarioLikeComentario.findAll", query="SELECT ulc FROM UsuarioLikeComentario ulc")
 public class UsuarioLikeComentario implements Serializable {
 	private static final long serialVersionUID = 1L;

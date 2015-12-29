@@ -1,19 +1,26 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedQueries;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table(name="etiqueta")
-@NamedQuery(name="Etiqueta.findAll", query="SELECT e FROM Etiqueta e")
+@NamedQueries({
+	@NamedQuery(name="Etiqueta.findAll", query="SELECT e FROM Etiqueta e"),
+	@NamedQuery(name="Etiqueta.findById", query="SELECT e FROM Etiqueta e WHERE e.etiquetaId = :etiquetaId"),
+	@NamedQuery(name="Etiqueta.findByVisible", query="SELECT e FROM Etiqueta e WHERE e.visibleEtiqueta = :visibleEtiqueta")
+	
+})
 public class Etiqueta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +38,7 @@ public class Etiqueta implements Serializable {
 	private int visibleEtiqueta;
 	
 	@OneToMany(mappedBy="etiqueta")
-	private List<OfertaHasEtiqueta> listaOfertaHasEtiqueta;
+	private transient List<OfertaHasEtiqueta> listaOfertaHasEtiqueta;
 
 	public Etiqueta() {
 	}
@@ -74,29 +81,6 @@ public class Etiqueta implements Serializable {
 
 	public void setListaOfertaHasEtiqueta(List<OfertaHasEtiqueta> listaOfertaHasEtiqueta) {
 		this.listaOfertaHasEtiqueta = listaOfertaHasEtiqueta;
-	}
-
-	public OfertaHasEtiqueta addListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaOfertaHasEtiqueta().add(laOfertaHasEtiqueta);
-		laOfertaHasEtiqueta.setEtiqueta(this);
-
-		return laOfertaHasEtiqueta;
-	}
-
-	public OfertaHasEtiqueta removeListaEtiquetas(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaOfertaHasEtiqueta().remove(laOfertaHasEtiqueta);
-		laOfertaHasEtiqueta.setEtiqueta(null);
-
-		return laOfertaHasEtiqueta;
-	}
-	
-
-	public List<Oferta> getListaSoloOfertas() {
-		List<Oferta> listaAux = new ArrayList<Oferta>();
-		for(int i=0; i<getListaOfertaHasEtiqueta().size(); i++){
-			listaAux.add(getListaOfertaHasEtiqueta().get(i).getOferta());
-		}
-		return listaAux;
 	}
 	
 	

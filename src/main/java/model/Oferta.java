@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -10,7 +9,22 @@ import javax.persistence.*;
 @Table(name="oferta")
 @NamedQueries({
 	@NamedQuery(name="Oferta.findAll", query="SELECT o FROM Oferta o"),
-	@NamedQuery(name="Oferta.findByUserId", query="SELECT o FROM Oferta o WHERE o.usuarioId = :usuarioId")
+	@NamedQuery(name="Oferta.findByOferta", query="SELECT o FROM Oferta o WHERE o.ofertaId = :ofertaId"),
+	@NamedQuery(name="Oferta.findByUsuario", query="SELECT o FROM Oferta o WHERE o.usuarioId = :usuarioId"),
+	@NamedQuery(name="Oferta.findByTitle", query="SELECT o FROM Oferta o WHERE o.title = :title"),
+	@NamedQuery(name="Oferta.findByPrice", query="SELECT o FROM Oferta o WHERE o.price like :price"),
+	@NamedQuery(name="Oferta.findByUbicationLat", query="SELECT o FROM Oferta o WHERE o.ubicationLat like :ubicationLat"),
+	@NamedQuery(name="Oferta.findByUbicationLon", query="SELECT o FROM Oferta o WHERE o.ubicationLon like :ubicationLon"),
+	@NamedQuery(name="Oferta.findByDate", query="SELECT o FROM Oferta o WHERE o.date = :date"),
+	@NamedQuery(name="Oferta.findByVisible", query="SELECT o FROM Oferta o WHERE o.visibleOferta = :visibleOferta"),
+	
+	@NamedQuery(name="Oferta.findByOfertaVisible", query="SELECT o FROM Oferta o WHERE o.ofertaId = :ofertaId AND o.visibleOferta = :visibleOferta"),
+	@NamedQuery(name="Oferta.findByUsuarioVisible", query="SELECT o FROM Oferta o WHERE o.usuarioId = :usuarioId AND o.visibleOferta = :visibleOferta"),
+	@NamedQuery(name="Oferta.findByTitleVisible", query="SELECT o FROM Oferta o WHERE o.title = :title AND o.visibleOferta = :visibleOferta"),
+	@NamedQuery(name="Oferta.findByPriceVisible", query="SELECT o FROM Oferta o WHERE o.price like :price AND o.visibleOferta = :visibleOferta"),
+	@NamedQuery(name="Oferta.findByUbicationLatVisible", query="SELECT o FROM Oferta o WHERE o.ubicationLat like :ubicationLat AND o.visibleOferta = :visibleOferta"),
+	@NamedQuery(name="Oferta.findByUbicationLonVisible", query="SELECT o FROM Oferta o WHERE o.ubicationLon like :ubicationLon AND o.visibleOferta = :visibleOferta"),
+	@NamedQuery(name="Oferta.findByDateVisible", query="SELECT o FROM Oferta o WHERE o.date = :date")
 })
 public class Oferta implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -47,17 +61,17 @@ public class Oferta implements Serializable {
 	private int visibleOferta;
 	
 	@OneToMany(mappedBy="oferta")
-	private List<OfertaHasEtiqueta> listaOfertaHasEtiqueta;
+	private transient List<OfertaHasEtiqueta> listaOfertaHasEtiqueta;
 	
 	@OneToMany(mappedBy="oferta")
-	private List<ImagenOferta> listaImagenes;
+	private transient List<ImagenOferta> listaImagenes;
 	
 	@ManyToOne
 	@PrimaryKeyJoinColumn(name="usuario_id", referencedColumnName = "usuario_id")
 	private Usuario usuario;
 	
 	@OneToMany(mappedBy="oferta")
-	private List<Comentario> listaComentarios;
+	private transient List<Comentario> listaComentarios;
 
 	public Oferta() {
 	}
@@ -201,36 +215,7 @@ public class Oferta implements Serializable {
 	public void setListaOfertaHasEtiqueta(List<OfertaHasEtiqueta> listaOfertaHasEtiqueta) {
 		this.listaOfertaHasEtiqueta = listaOfertaHasEtiqueta;
 	}
-
-	public OfertaHasEtiqueta addListaOfertaHasEtiqueta(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaOfertaHasEtiqueta().add(laOfertaHasEtiqueta);
-		laOfertaHasEtiqueta.setOferta(this);
-
-		return laOfertaHasEtiqueta;
-	}
-
-	public OfertaHasEtiqueta removeListaOfertaHasEtiqueta(OfertaHasEtiqueta laOfertaHasEtiqueta) {
-		getListaOfertaHasEtiqueta().remove(laOfertaHasEtiqueta);
-		laOfertaHasEtiqueta.setOferta(null);
-
-		return laOfertaHasEtiqueta;
-	}
 	
-	
-	
-	
-
-	public List<Etiqueta> getListaSoloEtiquetas() {
-		List<Etiqueta> listaAux = new ArrayList<Etiqueta>();
-		for(int i=0; i<getListaOfertaHasEtiqueta().size(); i++){
-			listaAux.add(getListaOfertaHasEtiqueta().get(i).getEtiqueta());
-		}
-		return listaAux;
-	}
-	
-	
-	
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

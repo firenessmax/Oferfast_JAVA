@@ -4,9 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="oferfastPU" transaction-type="JTA">
 		<jta-data-source>jdbc/oferfast</jta-data-source>
-		<class>model.Oferta</class>
-		<class>model.Etiqueta</class>
-		<class>model.ImagenOferta</class>
+		<class>model.Usuario</class>
 	</persistence-unit>
 
 </persistence>

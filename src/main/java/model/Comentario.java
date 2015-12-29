@@ -9,11 +9,25 @@ import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedQueries;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="comentario")
-@NamedQuery(name="Comentario.findAll", query="SELECT c FROM Comentario c")
+@NamedQueries({
+	@NamedQuery(name="Comentario.findAll", query="SELECT c FROM Comentario c"),
+	@NamedQuery(name="Comentario.findById", query="SELECT c FROM Comentario c WHERE c.comentarioId = :comentarioId"),
+	@NamedQuery(name="Comentario.findByUsuario", query="SELECT c FROM Comentario c WHERE c.usuarioId = :usuarioId"),
+	@NamedQuery(name="Comentario.findByOferta", query="SELECT c FROM Comentario c WHERE c.ofertaId = :ofertaId"),
+	@NamedQuery(name="Comentario.findByDate", query="SELECT c FROM Comentario c WHERE c.date like :date"),
+	@NamedQuery(name="Comentario.findByVisible", query="SELECT c FROM Comentario c WHERE c.visibleComentario = :visibleComentario"),
+	
+	@NamedQuery(name="Comentario.findByIdVisible", query="SELECT c FROM Comentario c WHERE c.comentarioId = :comentarioId AND c.visibleComentario = :visibleComentario"),
+	@NamedQuery(name="Comentario.findByUsuarioVisible", query="SELECT c FROM Comentario c WHERE c.usuarioId = :usuarioId AND c.visibleComentario = :visibleComentario"),
+	@NamedQuery(name="Comentario.findByOfertaVisible", query="SELECT c FROM Comentario c WHERE c.ofertaId = :ofertaId AND c.visibleComentario = :visibleComentario"),
+	@NamedQuery(name="Comentario.findByDateVisible", query="SELECT c FROM Comentario c WHERE c.date like :date AND c.visibleComentario = :visibleComentario")
+	
+})
 public class Comentario implements Serializable {
 	private static final long serialVersionUID = 1L;
 

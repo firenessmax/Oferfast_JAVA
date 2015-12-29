@@ -5,13 +5,31 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="usuario")
-@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
+@NamedQueries({
+	@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),
+	@NamedQuery(name="Usuario.findById", query="SELECT u FROM Usuario u WHERE u.usuarioId = :usuarioId"),
+	@NamedQuery(name="Usuario.findByUsername", query="SELECT u FROM Usuario u WHERE u.username = :username"),
+	@NamedQuery(name="Usuario.findByEmail", query="SELECT u FROM Usuario u WHERE u.email = :email"),
+	@NamedQuery(name="Usuario.findByType", query="SELECT u FROM Usuario u WHERE u.type = :type"),
+	@NamedQuery(name="Usuario.findByReputation", query="SELECT u FROM Usuario u WHERE u.reputation = :reputation"),
+	@NamedQuery(name="Usuario.findByPermission", query="SELECT u FROM Usuario u WHERE u.permission = :permission"),
+	@NamedQuery(name="Usuario.findByVisible", query="SELECT u FROM Usuario u WHERE u.visibleUsuario = :visibleUsuario"),
+	
+	@NamedQuery(name="Usuario.findByIdVisible", query="SELECT u FROM Usuario u WHERE u.usuarioId = :usuarioId AND u.visibleUsuario = :visibleUsuario"),
+	@NamedQuery(name="Usuario.findByUsernameVisible", query="SELECT u FROM Usuario u WHERE u.username = :username AND u.visibleUsuario = :visibleUsuario"),
+	@NamedQuery(name="Usuario.findByEmailVisible", query="SELECT u FROM Usuario u WHERE u.email = :email AND u.visibleUsuario = :visibleUsuario"),
+	@NamedQuery(name="Usuario.findByTypeVisible", query="SELECT u FROM Usuario u WHERE u.type = :type AND u.visibleUsuario = :visibleUsuario"),
+	@NamedQuery(name="Usuario.findByReputationVisible", query="SELECT u FROM Usuario u WHERE u.reputation = :reputation AND u.visibleUsuario = :visibleUsuario"),
+	@NamedQuery(name="Usuario.findByPermissionVisible", query="SELECT u FROM Usuario u WHERE u.permission = :permission AND u.visibleUsuario = :visibleUsuario"),
+
+})
 public class Usuario {
 	private static final long serialVersionUID = 1L;
 
@@ -47,13 +65,26 @@ public class Usuario {
 	private int visibleUsuario;
 	
 	@OneToMany(mappedBy="usuario")
-	private List<Oferta> listaOfertas;
+	private transient List<Oferta> listaOfertas;
 	
 	@OneToMany(mappedBy="usuario")
-	private List<Comentario> listaComentarios;
+	private transient List<Comentario> listaComentarios;
 
 	public Usuario() {
 	}
+	
+	public Usuario(int usuarioId, String username, int type, int reputation, String urlProfilePicture,
+			String urlProfileThumbnail) {
+		super();
+		this.usuarioId = usuarioId;
+		this.username = username;
+		this.type = type;
+		this.reputation = reputation;
+		this.urlProfilePicture = urlProfilePicture;
+		this.urlProfileThumbnail = urlProfileThumbnail;
+	}
+
+
 
 	public int getUsuarioId() {
 		return usuarioId;
@@ -177,6 +208,10 @@ public class Usuario {
 		elComentario.setUsuario(null);
 
 		return elComentario;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	

@@ -3,6 +3,7 @@ package facade;
 import java.util.List;
 import javax.ejb.Local;
 import model.Etiqueta;
+import model.Oferta;
 
 @Local
 public interface EtiquetaFacade {
@@ -18,6 +19,8 @@ public interface EtiquetaFacade {
 	public List<Etiqueta> findAll();
 
 	public List<Etiqueta> findRange(int[] range);
+	
+	public List<Oferta> findOfertaByID(int id);
 
 	public int count();
 

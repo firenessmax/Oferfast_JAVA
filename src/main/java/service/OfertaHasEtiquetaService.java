@@ -22,7 +22,7 @@ public class OfertaHasEtiquetaService {
 	@EJB 
 	OfertaHasEtiquetaFacade ofertaHasEtiquetaFacadeEJB;
 	
-	Logger logger = Logger.getLogger(OfertaService.class.getName());
+	Logger logger = Logger.getLogger(OfertaHasEtiquetaService.class.getName());
 	
 	@GET
 	@Produces({"application/xml", "application/json"})
@@ -48,8 +48,9 @@ public class OfertaHasEtiquetaService {
 	
 	@POST
     @Consumes({"application/xml", "application/json"})
-    public void create(OfertaHasEtiqueta entity) {
+    public OfertaHasEtiqueta create(OfertaHasEtiqueta entity) {
 		ofertaHasEtiquetaFacadeEJB.create(entity);
+		return entity;
     }
 
     @PUT
