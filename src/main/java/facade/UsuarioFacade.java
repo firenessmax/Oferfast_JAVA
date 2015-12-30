@@ -2,6 +2,7 @@ package facade;
 
 import java.util.List;
 
+import model.Oferta;
 import model.Usuario;
 
 public interface UsuarioFacade {
