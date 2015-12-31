@@ -21,6 +21,8 @@ public interface UsuarioFacade {
 
 	public List<Oferta> findOfertas(int id);
 
+	public Usuario editar(Usuario entity, Usuario antiguo);
+
 	public int count();
 
 }

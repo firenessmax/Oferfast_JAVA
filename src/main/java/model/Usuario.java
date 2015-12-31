@@ -158,7 +158,7 @@ public class Usuario {
 		this.urlProfileThumbnail = urlProfileThumbnail;
 	}
 
-	public int isVisibleUsuario() {
+	public int getVisibleUsuario() {
 		return visibleUsuario;
 	}
 

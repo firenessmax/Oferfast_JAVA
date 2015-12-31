@@ -58,9 +58,14 @@ public class UsuarioService {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Usuario entity) {
-    	entity.setUsuarioId(id.intValue());
-    	usuarioFacadeEJB.edit(entity);
+    //public void edit(@PathParam("id") Integer id, Usuario entity) {
+    public Usuario edit(@PathParam("id") Integer id, Usuario entity) {
+		entity.setUsuarioId(id.intValue());
+    	Usuario aux = usuarioFacadeEJB.find(id);
+    	entity = usuarioFacadeEJB.editar(entity, aux); //editar creado, no el que existe
+    	return entity;
+    	//entity.setUsuarioId(id.intValue());
+    	//usuarioFacadeEJB.edit(entity);
     }
 
 }
