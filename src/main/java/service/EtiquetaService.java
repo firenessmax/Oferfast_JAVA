@@ -16,7 +16,6 @@ import javax.ws.rs.Produces;
 import facade.EtiquetaFacade;
 import model.Etiqueta;
 import model.Oferta;
-import model.OfertaHasEtiqueta;
 
 
 @Path("/etiquetas")

@@ -3,8 +3,12 @@ package ejb;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.Response;
 
 import facade.AbstractFacade;
 import facade.UsuarioFacade;
@@ -61,7 +65,35 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
     	if(entity.getVisibleUsuario() == 0){
     		entity.setVisibleUsuario(antiguo.getVisibleUsuario());
     	}
+    	if(entity.getReputation() == 0){
+    		entity.setReputation(antiguo.getReputation());
+    	}
+    	if(entity.getPermission() == 0){
+    		entity.setPermission(antiguo.getPermission());
+    	}
     	return entity;
+	}
+	
+	@Override
+	public Response login(JsonObject datos){
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		String username = datos.getString("username");
+		String password = datos.getString("password");
+		try{
+			Usuario user = em.createNamedQuery("Usuario.findByUsername", Usuario.class)
+	        		.setParameter("username", username).getSingleResult();
+			if(user.getPassword().equals(password)){
+				jsonObjBuilder.add("INFORMACION", "Loggeado");
+			} else {
+				jsonObjBuilder.add("ERROR", "La constraseña no corresponde, vuelva a intentarlo");
+			}
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+		} catch(Exception e){
+			jsonObjBuilder.add("ERROR", "No existe un usuario con ese username");
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+		}
 	}
 
 }

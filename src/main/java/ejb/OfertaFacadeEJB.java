@@ -68,4 +68,35 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
         		);
         return resp;
 	}
+	
+	@Override
+	public Oferta editar(Oferta entity, Oferta antigua){
+		if(entity.getUsuarioId() == 0){
+			entity.setUsuarioId(antigua.getUsuarioId());
+		}
+		if(entity.getTitle() == null){
+			entity.setTitle(antigua.getTitle());			
+		}
+		if(entity.getDescription() == null){
+			entity.setDescription(antigua.getDescription());			
+		}
+		if(entity.getPrice() == 0){
+			entity.setPrice(antigua.getPrice());
+		}
+		if(entity.getUbicationLon() == 0){
+			entity.setUbicationLon(antigua.getUbicationLon());
+		}
+		if(entity.getUbicationLat() == 0){
+			entity.setUbicationLat(antigua.getUbicationLat());
+		}
+		if(entity.getImagesNumber() == 0){
+			entity.setImagesNumber(antigua.getImagesNumber());
+		}
+		//date siempre coloca la fecha anterior, xq no deberia poder cambiarse
+		entity.setDate(antigua.getDate());
+		if(entity.getVisibleOferta() == 0){
+			entity.setVisibleOferta(antigua.getVisibleOferta());
+		}
+		return entity;
+	}
 }

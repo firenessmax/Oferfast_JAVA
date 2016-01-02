@@ -28,6 +28,8 @@ public interface OfertaFacade {
 	public List<ImagenOferta> findImagenByID(int id);
 	
 	public Usuario findUsuarioByID(int id);
+	
+	public Oferta editar(Oferta entity, Oferta antigua);
 
 	public int count();
 }

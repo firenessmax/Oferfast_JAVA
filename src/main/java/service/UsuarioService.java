@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -13,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import facade.UsuarioFacade;
 import model.Oferta;
@@ -54,16 +58,24 @@ public class UsuarioService {
     public void create(Usuario entity) {
 		usuarioFacadeEJB.create(entity);
     }
+	
+	@POST
+	@Path("login")
+	@Consumes({"application/json"})
+	@Produces({"application/json"})
+	public Response registro(JsonObject entrada){
+		return usuarioFacadeEJB.login(entrada);
+	}
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     //public void edit(@PathParam("id") Integer id, Usuario entity) {
-    public Usuario edit(@PathParam("id") Integer id, Usuario entity) {
+    public void edit(@PathParam("id") Integer id, Usuario entity) {
 		entity.setUsuarioId(id.intValue());
     	Usuario aux = usuarioFacadeEJB.find(id);
     	entity = usuarioFacadeEJB.editar(entity, aux); //editar creado, no el que existe
-    	return entity;
+    	usuarioFacadeEJB.edit(entity);
     	//entity.setUsuarioId(id.intValue());
     	//usuarioFacadeEJB.edit(entity);
     }

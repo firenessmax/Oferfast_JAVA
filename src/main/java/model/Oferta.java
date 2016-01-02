@@ -148,7 +148,7 @@ public class Oferta implements Serializable {
 		this.usuarioId = usuarioId;
 	}
 
-	public int isVisibleOferta() {
+	public int getVisibleOferta() {
 		return visibleOferta;
 	}
 
