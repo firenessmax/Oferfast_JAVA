@@ -60,7 +60,7 @@ Para obtener las etiquetas, existen las siguientes opciones
 }
 ```
 
--Modificar etiqueta
+- Modificar etiqueta
 <p>@PUT</p>
 <p>/etiquetas</p>
 ```json
