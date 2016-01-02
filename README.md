@@ -10,9 +10,9 @@ Etiquetas
 --------
 Para obtener las etiquetas, existen las siguientes opciones
 
--Obtener una lista de etiquetas
-@GET
-/etiquetas
+- Obtener una lista de etiquetas
+<p>@GET</p>
+<p>/etiquetas</p>
 ```json
 [{
 	"counter":3,"etiquetaId":1,"name":"cocina","visibleEtiqueta":0
@@ -23,18 +23,18 @@ Para obtener las etiquetas, existen las siguientes opciones
 }]
 ```
 
--Obtener una etiqueta especifica
-@GET
-/etiquetas/{id}
+- Obtener una etiqueta especifica
+<p>@GET</p>
+<p>/etiquetas/{id}</p>
 ```json
 {
 	"counter":3,"etiquetaId":1,"name":"cocina","visibleEtiqueta":0
 }
 ```
 
--Obtener las ofertas que usan una etiqueta especifica
-@GET
-/etiquetas/{id}/ofertas
+- Obtener las ofertas que usan una etiqueta especifica
+<p>@GET</p>
+<p>/etiquetas/{id}/ofertas</p>
 ```json
 [{
     "date": "2015-12-28T11:26:58.800174", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 1000, "title": "title_1", "ubicationLat": 20, "ubicationLon": 10,
@@ -51,9 +51,9 @@ Para obtener las etiquetas, existen las siguientes opciones
 }]
 ```
 
--Escribir etiqueta
-@POST
-/etiquetas
+- Escribir etiqueta
+<p>@POST</p>
+<p>/etiquetas</p>
 ```json
 {
 	"counter":0,"name":"<<nombre_de_la_etiqueta>>","visibleEtiqueta":0
@@ -61,8 +61,8 @@ Para obtener las etiquetas, existen las siguientes opciones
 ```
 
 -Modificar etiqueta
-@PUT
-/etiquetas
+<p>@PUT</p>
+<p>/etiquetas</p>
 ```json
 {
 	"counter":3,"etiquetaId":1,"name":"<<nuevo_nombre_de_la_etiqueta>>","visibleEtiqueta":0
