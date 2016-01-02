@@ -8,7 +8,6 @@
 
 Etiquetas
 --------
-Para obtener las etiquetas, existen las siguientes opciones
 
 - Obtener una lista de etiquetas
 <p>@GET</p>
@@ -73,3 +72,32 @@ Para obtener las etiquetas, existen las siguientes opciones
 
 
 
+Usuarios
+--------
+
+- Info del login
+<p>@POST</p>
+<p>/usuarios/login</p>
+```json
+{
+    "username": "nombre_de_usuario",
+    "password": "contraseña"
+}
+```
+los JSON posibles son (dependiendo de si corresponden los datos):
+
+```json
+{
+  "INFO": "Loggeado",
+  "usuarioId": 2, "username": "user_2", "email": "email_2", "type": 1, "reputation": 1, "urlProfilePicture": "picture_2", 
+  "urlProfileThumbnail": "thumbnail_2"
+}
+
+{
+  "ERROR": "La constraseña no corresponde, vuelva a intentarlo"
+}
+
+{
+  "ERROR": "No existe un usuario con ese username"
+}
+```

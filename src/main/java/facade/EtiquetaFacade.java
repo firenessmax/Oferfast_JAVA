@@ -21,6 +21,8 @@ public interface EtiquetaFacade {
 	public List<Etiqueta> findRange(int[] range);
 	
 	public List<Oferta> findOfertaByID(int id);
+	
+	public Etiqueta editar(Etiqueta entity, Etiqueta antiguo);
 
 	public int count();
 

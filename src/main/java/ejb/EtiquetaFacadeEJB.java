@@ -45,4 +45,18 @@ public class EtiquetaFacadeEJB extends AbstractFacade<Etiqueta> implements Etiqu
 		}		
 		return lista;
 	}
+	
+	@Override
+	public Etiqueta editar(Etiqueta entity, Etiqueta antiguo){
+    	if(entity.getName() == null){
+    		entity.setName(antiguo.getName());
+    	}
+    	if(entity.getVisibleEtiqueta() == 0){
+    		entity.setVisibleEtiqueta(antiguo.getVisibleEtiqueta());
+    	}
+    	//no deberia cambiarse por aca el valor de counter, sino por trigger, asi que se obtiene el valor existente
+    	entity.setCounter(antiguo.getCounter());
+    	return entity;
+		
+	}
 }

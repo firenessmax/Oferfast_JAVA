@@ -67,7 +67,7 @@ public class Etiqueta implements Serializable {
 		this.counter = counter;
 	}
 
-	public int isVisibleEtiqueta() {
+	public int getVisibleEtiqueta() {
 		return visibleEtiqueta;
 	}
 

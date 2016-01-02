@@ -83,7 +83,14 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 			Usuario user = em.createNamedQuery("Usuario.findByUsername", Usuario.class)
 	        		.setParameter("username", username).getSingleResult();
 			if(user.getPassword().equals(password)){
-				jsonObjBuilder.add("INFORMACION", "Loggeado");
+				jsonObjBuilder.add("INFO", "Loggeado")
+					.add("usuarioId", user.getUsuarioId())
+					.add("username",user.getUsername())
+					.add("email",user.getEmail())
+					.add("type",user.getType())
+					.add("reputation",user.getReputation())
+					.add("urlProfilePicture",user.getUrlProfilePicture())
+					.add("urlProfileThumbnail",user.getUrlProfileThumbnail());
 			} else {
 				jsonObjBuilder.add("ERROR", "La constraseña no corresponde, vuelva a intentarlo");
 			}

@@ -60,6 +60,8 @@ public class EtiquetaService {
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Etiqueta entity) {
     	entity.setEtiquetaId(id.intValue());
+    	Etiqueta aux = etiquetaFacadeEJB.find(id);
+    	entity = etiquetaFacadeEJB.editar(entity, aux);
     	etiquetaFacadeEJB.edit(entity);
     }
 }
