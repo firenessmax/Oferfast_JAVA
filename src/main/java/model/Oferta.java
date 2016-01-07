@@ -9,12 +9,12 @@ import javax.persistence.*;
 @Table(name="oferta")
 @NamedQueries({
 	@NamedQuery(name="Oferta.findAll", query="SELECT o FROM Oferta o"),
-	@NamedQuery(name="Oferta.findByOferta", query="SELECT o FROM Oferta o WHERE o.ofertaId = :ofertaId"),
+	@NamedQuery(name="Oferta.findByOfertaId", query="SELECT o FROM Oferta o WHERE o.ofertaId = :ofertaId"),
 	@NamedQuery(name="Oferta.findByUsuario", query="SELECT o FROM Oferta o WHERE o.usuarioId = :usuarioId"),
 	@NamedQuery(name="Oferta.findByTitle", query="SELECT o FROM Oferta o WHERE o.title = :title"),
-	@NamedQuery(name="Oferta.findByPrice", query="SELECT o FROM Oferta o WHERE o.price like :price"),
-	@NamedQuery(name="Oferta.findByUbicationLat", query="SELECT o FROM Oferta o WHERE o.ubicationLat like :ubicationLat"),
-	@NamedQuery(name="Oferta.findByUbicationLon", query="SELECT o FROM Oferta o WHERE o.ubicationLon like :ubicationLon"),
+	@NamedQuery(name="Oferta.findByPrice", query="SELECT o FROM Oferta o WHERE o.price = :price"),
+	@NamedQuery(name="Oferta.findByUbicationLat", query="SELECT o FROM Oferta o WHERE o.ubicationLat = :ubicationLat"),
+	@NamedQuery(name="Oferta.findByUbicationLon", query="SELECT o FROM Oferta o WHERE o.ubicationLon = :ubicationLon"),
 	@NamedQuery(name="Oferta.findByDate", query="SELECT o FROM Oferta o WHERE o.date = :date"),
 	@NamedQuery(name="Oferta.findByVisible", query="SELECT o FROM Oferta o WHERE o.visibleOferta = :visibleOferta"),
 	
@@ -24,7 +24,11 @@ import javax.persistence.*;
 	@NamedQuery(name="Oferta.findByPriceVisible", query="SELECT o FROM Oferta o WHERE o.price like :price AND o.visibleOferta = :visibleOferta"),
 	@NamedQuery(name="Oferta.findByUbicationLatVisible", query="SELECT o FROM Oferta o WHERE o.ubicationLat like :ubicationLat AND o.visibleOferta = :visibleOferta"),
 	@NamedQuery(name="Oferta.findByUbicationLonVisible", query="SELECT o FROM Oferta o WHERE o.ubicationLon like :ubicationLon AND o.visibleOferta = :visibleOferta"),
-	@NamedQuery(name="Oferta.findByDateVisible", query="SELECT o FROM Oferta o WHERE o.date = :date")
+	@NamedQuery(name="Oferta.findByDateVisible", query="SELECT o FROM Oferta o WHERE o.date = :date AND o.visibleOferta = :visibleOferta"),
+	
+	@NamedQuery(name="Oferta.findByUbicationLonLat", query="SELECT o FROM Oferta o WHERE o.ubicationLon = :ubicationLon AND o.ubicationLat = :ubicationLat"),
+	@NamedQuery(name="Oferta.findByOferta", query="SELECT o FROM Oferta o WHERE o.usuarioId = :usuarioId AND "
+			+ "o.title = :title AND o.price = :price AND o.description = :description AND o.ubicationLon = :ubicationLon AND o.ubicationLat = :ubicationLat")
 })
 public class Oferta implements Serializable {
 	private static final long serialVersionUID = 1L;

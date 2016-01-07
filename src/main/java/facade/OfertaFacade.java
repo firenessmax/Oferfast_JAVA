@@ -1,7 +1,9 @@
 package facade;
 
+import java.sql.Timestamp;
 import java.util.List;
 import javax.ejb.Local;
+import javax.json.JsonObject;
 
 import model.Etiqueta;
 import model.ImagenOferta;
@@ -30,6 +32,14 @@ public interface OfertaFacade {
 	public Usuario findUsuarioByID(int id);
 	
 	public Oferta editar(Oferta entity, Oferta antigua);
+	
+	public Oferta crear(JsonObject entity);
+
+	public List<Oferta> findAllVisible(int sino);
+
+	public Oferta findByLonLat(Double Lon, Double Lat);
+
+	public Oferta findByOferta(Oferta entity);
 
 	public int count();
 }

@@ -2,6 +2,9 @@ package facade;
 
 import java.util.List;
 
+import javax.json.JsonArray;
+
+import model.Oferta;
 import model.OfertaHasEtiqueta;
 
 public interface OfertaHasEtiquetaFacade {
@@ -17,6 +20,8 @@ public interface OfertaHasEtiquetaFacade {
 	public List<OfertaHasEtiqueta> findAll();
 
 	public List<OfertaHasEtiqueta> findRange(int[] range);
+
+	public List<OfertaHasEtiqueta> createByOfertaEtiqueta(Oferta laOferta, JsonArray lista);
 
 	public int count();
 

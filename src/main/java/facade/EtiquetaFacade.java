@@ -2,6 +2,8 @@ package facade;
 
 import java.util.List;
 import javax.ejb.Local;
+import javax.json.JsonArray;
+
 import model.Etiqueta;
 import model.Oferta;
 
@@ -23,6 +25,10 @@ public interface EtiquetaFacade {
 	public List<Oferta> findOfertaByID(int id);
 	
 	public Etiqueta editar(Etiqueta entity, Etiqueta antiguo);
+	
+	public List<Etiqueta> addPorOferta(JsonArray lista);
+
+	public List<Etiqueta> findAllByName(JsonArray lista);
 
 	public int count();
 

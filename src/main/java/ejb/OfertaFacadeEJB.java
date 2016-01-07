@@ -1,10 +1,14 @@
 package ejb;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 
 import facade.AbstractFacade;
@@ -83,12 +87,9 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 		if(entity.getPrice() == 0){
 			entity.setPrice(antigua.getPrice());
 		}
-		if(entity.getUbicationLon() == 0){
-			entity.setUbicationLon(antigua.getUbicationLon());
-		}
-		if(entity.getUbicationLat() == 0){
-			entity.setUbicationLat(antigua.getUbicationLat());
-		}
+		//ubicacion no deberia editarse, para que asi no puedan publicar ofertas malas
+		entity.setUbicationLon(antigua.getUbicationLon());
+		entity.setUbicationLat(antigua.getUbicationLat());
 		if(entity.getImagesNumber() == 0){
 			entity.setImagesNumber(antigua.getImagesNumber());
 		}
@@ -98,5 +99,49 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 			entity.setVisibleOferta(antigua.getVisibleOferta());
 		}
 		return entity;
+	}
+	
+	@Override
+	public Oferta crear(JsonObject entity){
+		Oferta laOferta = new Oferta();
+		//laOferta.setOfertaId(entity.getInt("ofertaId"));
+		//String aux = String.valueOf(entity.get("ubicationLon")) ;
+		//Timestamp aux = Timestamp.valueOf(String.valueOf(entity.getBoolean("date")));
+		laOferta.setTitle(entity.getString("title"));
+		laOferta.setDescription(entity.getString("description"));
+		laOferta.setPrice(entity.getInt("price"));
+		laOferta.setUbicationLat(Double.parseDouble(String.valueOf(entity.get("ubicationLat"))));
+		laOferta.setUbicationLon(Double.parseDouble(String.valueOf(entity.get("ubicationLon"))));
+		laOferta.setVisibleOferta(entity.getInt("visibleOferta"));
+		laOferta.setUsuarioId(entity.getInt("usuarioId"));
+		//laOferta.setDate(Timestamp.valueOf(entity.getString("date")));
+		laOferta.setImagesNumber(entity.getInt("imagesNumber"));
+		
+		//trabajando en esta wea
+		return laOferta;
+		//return aux;
+	}
+	
+	@Override
+	public List<Oferta> findAllVisible(int sino){
+		return em.createNamedQuery("Oferta.findByVisible", Oferta.class)
+			.setParameter("visibleOferta", sino).getResultList();
+	}
+	
+	@Override
+	public Oferta findByLonLat(Double Lon, Double Lat){
+		return em.createNamedQuery("Oferta.findByUbicationLonLat", Oferta.class)
+				.setParameter("ubicationLon", Lon).setParameter("ubicationLat", Lat).getSingleResult();
+	}
+	
+	public Oferta findByOferta(Oferta entity){
+		return em.createNamedQuery("Oferta.findByOferta", Oferta.class)
+				.setParameter("usuarioId", entity.getUsuarioId())
+				.setParameter("title", entity.getTitle())
+				.setParameter("price", entity.getPrice())
+				.setParameter("description", entity.getDescription())
+				.setParameter("ubicationLon", entity.getUbicationLon())
+				.setParameter("ubicationLat", entity.getUbicationLat())
+				.getSingleResult();
 	}
 }

@@ -6,6 +6,89 @@
 --------
 
 
+
+Ofertas
+--------
+
+- Obtener una lista de ofertas
+<p>@GET</p>
+<p>/ofertas</p>
+```json
+[{
+    "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
+  },
+  {
+    "date": "2016-01-06T21:22:06.208709", "description": "description_2", "imagesNumber": 0, "ofertaId": 2, "price": 1000, "title": "title_2", "ubicationLat": 50, "ubicationLon": 200, "usuarioId": 1, "visibleOferta": 1
+  }]
+```
+
+- Obtener una lista de ofertas visibles/no visibles
+<p>@GET</p>
+<p>/ofertas/{sino}</p>
+sino, debe tener valor 1 (visible) o 0 (no visible)
+```json
+[{
+    "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
+  },
+  {
+    "date": "2016-01-06T21:22:06.208709", "description": "description_2", "imagesNumber": 0, "ofertaId": 2, "price": 1000, "title": "title_2", "ubicationLat": 50, "ubicationLon": 200, "usuarioId": 1, "visibleOferta": 1
+  }]
+```
+
+
+- Obtener una oferta especifica
+<p>@GET</p>
+<p>/oferta/{id}</p>
+```json
+{
+    "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
+}
+```
+
+- Obtener las etiquetas que usa una oferta especifica
+<p>@GET</p>
+<p>/ofertas/{id}/etiquetas</p>
+```json
+[
+  {
+    "counter": 1, "etiquetaId": 1, "name": "tag_1", "visibleEtiqueta": 1
+  },
+  {
+    "counter": 1, "etiquetaId": 2, "name": "tag_2", "visibleEtiqueta": 1
+  },
+  {
+    "counter": 1, "etiquetaId": 3, "name": "tag_3", "visibleEtiqueta": 1
+  },
+  {
+    "counter": 1, "etiquetaId": 4, "name": "cocina", "visibleEtiqueta": 1
+  }
+]
+```
+
+- Escribir oferta
+<p>@POST</p>
+<p>/ofertas</p>
+```json
+{
+  "title": "title_1", "description": "description_1", "ubicationLon":10, "ubicationLat":20, "price":1000, "imagesNumber":0, "visibleOferta":1, "usuarioId":1
+}
+```
+
+- Escribir oferta que posee etiquetas (el que usaremos)
+<p>@POST</p>
+<p>/ofertas/newOferta</p>
+```json
+{
+  "title": "title_8", "description": "description_8", "ubicationLon":250, "ubicationLat":54, "price":1200, "imagesNumber":0, "visibleOferta":1, "usuarioId":2,
+  "tags":["tag_1","tag_2","tag_2","cocina"]
+}
+```
+
+
+
+
+
+
 Etiquetas
 --------
 

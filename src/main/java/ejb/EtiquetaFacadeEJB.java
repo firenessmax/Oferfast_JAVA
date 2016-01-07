@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.json.JsonArray;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -58,5 +59,42 @@ public class EtiquetaFacadeEJB extends AbstractFacade<Etiqueta> implements Etiqu
     	entity.setCounter(antiguo.getCounter());
     	return entity;
 		
+	}
+	
+	@Override
+	public List<Etiqueta> addPorOferta(JsonArray lista){
+		List<Etiqueta> laLista = new ArrayList<>();
+		Etiqueta aux;
+		for(int i=0; i<lista.size(); i++){
+			try{
+				//si la query resulta, es xq existe
+				aux = em.createNamedQuery("Etiqueta.findByName", Etiqueta.class)
+						.setParameter("name", lista.getString(i)).getSingleResult();
+				//aux.setName(aux.getName()+" - existente");
+			} catch(Exception e){
+				aux = new Etiqueta();
+				aux.setName(lista.getString(i));
+				aux.setVisibleEtiqueta(1);
+			}			
+			//Etiqueta aux = new Etiqueta();
+			//aux.setName(lista.getString(i));
+			//hacer la conexion
+			laLista.add(aux);
+		}
+		//devuelve todas las etiquetas no existen
+		return laLista;
+	}
+	
+	@Override
+	public List<Etiqueta> findAllByName(JsonArray lista){
+		List<Etiqueta> laLista = new ArrayList<>();
+		Etiqueta aux;
+		for(int i=0; i<lista.size(); i++){
+			aux = em.createNamedQuery("Etiqueta.findByName", Etiqueta.class)
+					.setParameter("name", lista.getString(i)).getSingleResult();
+			laLista.add(aux);
+		}
+		//devuelve todas las etiquetas no existen
+		return laLista;
 	}
 }

@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="Etiqueta.findAll", query="SELECT e FROM Etiqueta e"),
 	@NamedQuery(name="Etiqueta.findById", query="SELECT e FROM Etiqueta e WHERE e.etiquetaId = :etiquetaId"),
+	@NamedQuery(name="Etiqueta.findByName", query="SELECT e FROM Etiqueta e WHERE e.name = :name"),
 	@NamedQuery(name="Etiqueta.findByVisible", query="SELECT e FROM Etiqueta e WHERE e.visibleEtiqueta = :visibleEtiqueta")
 	
 })
