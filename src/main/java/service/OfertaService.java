@@ -40,7 +40,8 @@ public class OfertaService {
 	
 	Logger logger = Logger.getLogger(OfertaService.class.getName());
 	
-	@GET
+	@GET	//independiente si son visibles o no
+	@Path("/all") 
 	@Produces({"application/xml", "application/json"})
 	public List<Oferta> findAll(){
 		logger.setLevel(Level.ALL);
@@ -54,11 +55,18 @@ public class OfertaService {
 		return ofertas;
 	}
 	
-	@GET
-	@Path("/visible/{sino}")
+	@GET	//solo los visibles
     @Produces({"application/xml", "application/json"})
-	public List<Oferta> findAllVisible(@PathParam("sino") Integer sino){//sino-> si=1, no=0 
-		List<Oferta> lista = ofertaFacadeEJB.findAllVisible(sino);
+	public List<Oferta> findAllVisible(){
+		List<Oferta> lista = ofertaFacadeEJB.findAllVisible(1);
+		return lista;
+	}
+	
+	@GET	//los no visibles
+	@Path("/notVisible")
+    @Produces({"application/xml", "application/json"})
+	public List<Oferta> findAllNotVisible(){
+		List<Oferta> lista = ofertaFacadeEJB.findAllVisible(0);
 		return lista;
 	}
 	
@@ -92,6 +100,7 @@ public class OfertaService {
     }
 	
 	@POST
+    @Path("/newAntiguo")
     @Consumes({"application/xml", "application/json"})
 	//aceptar de entrada cualquier JSON, y separarlo, verificar las etiquetas, etc etc etc
     public void create(Oferta entity) {
@@ -99,7 +108,6 @@ public class OfertaService {
     }
 	
 	@POST
-    @Path("/newOferta")
     @Consumes({"application/xml", "application/json"})
 	//aceptar de entrada cualquier JSON, y separarlo, verificar las etiquetas, etc etc etc
     public int createOferta(JsonObject entrada) {

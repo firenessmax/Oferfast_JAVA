@@ -10,7 +10,7 @@
 Ofertas
 --------
 
-- Obtener una lista de ofertas
+- Obtener una lista de ofertas (visibles)
 <p>@GET</p>
 <p>/ofertas</p>
 ```json
@@ -22,10 +22,21 @@ Ofertas
   }]
 ```
 
-- Obtener una lista de ofertas visibles/no visibles
+- Obtener una lista de ofertas no visibles
 <p>@GET</p>
-<p>/ofertas/{sino}</p>
-sino, debe tener valor 1 (visible) o 0 (no visible)
+<p>/ofertas/notVisible</p>
+```json
+[{
+    "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
+  },
+  {
+    "date": "2016-01-06T21:22:06.208709", "description": "description_2", "imagesNumber": 0, "ofertaId": 2, "price": 1000, "title": "title_2", "ubicationLat": 50, "ubicationLon": 200, "usuarioId": 1, "visibleOferta": 1
+  }]
+```
+
+- Obtener una lista de ofertas (independientemente de si son visibles o no)
+<p>@GET</p>
+<p>/ofertas/all</p>
 ```json
 [{
     "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
@@ -67,7 +78,7 @@ sino, debe tener valor 1 (visible) o 0 (no visible)
 
 - Escribir oferta
 <p>@POST</p>
-<p>/ofertas</p>
+<p>/ofertas/newAntiguo</p>
 ```json
 {
   "title": "title_1", "description": "description_1", "ubicationLon":10, "ubicationLat":20, "price":1000, "imagesNumber":0, "visibleOferta":1, "usuarioId":1
@@ -76,7 +87,7 @@ sino, debe tener valor 1 (visible) o 0 (no visible)
 
 - Escribir oferta que posee etiquetas (el que usaremos)
 <p>@POST</p>
-<p>/ofertas/newOferta</p>
+<p>/ofertas</p>
 ```json
 {
   "title": "title_8", "description": "description_8", "ubicationLon":250, "ubicationLat":54, "price":1200, "imagesNumber":0, "visibleOferta":1, "usuarioId":2,
@@ -158,6 +169,57 @@ Etiquetas
 Usuarios
 --------
 
+- Obtener una lista de usuarios
+<p>@GET</p>
+<p>/usuarios</p>
+```json
+[{
+    "email": "email_1", "password": "password_1", "permission": 1, "reputation": 1, "type": 1, "urlProfilePicture": "picture_1", "urlProfileThumbnail": "thumbnail_1", "username": "user_1", "usuarioId": 1, "visibleUsuario": 1
+  },
+  {
+    "email": "email_2", "password": "password_2", "permission": 1, "reputation": 1, "type": 1, "urlProfilePicture": "picture_2", "urlProfileThumbnail": "thumbnail_2", "username": "user_2", "usuarioId": 2, "visibleUsuario": 1
+  }]
+```
+
+- Obtener un usuario especifico
+<p>@GET</p>
+<p>/usuarios/{id}</p>
+```json
+{
+    "email": "email_1", "password": "password_1", "permission": 1, "reputation": 1, "type": 1, "urlProfilePicture": "picture_1", "urlProfileThumbnail": "thumbnail_1", "username": "user_1", "usuarioId": 1, "visibleUsuario": 1
+}
+```
+
+- Obtener todas las ofertas de un usuario especifico
+<p>@GET</p>
+<p>/usuarios/{id}/ofertas</p>
+```json
+[
+  {
+    "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
+  },
+  {
+    "date": "2016-01-06T21:22:06.208709", "description": "description_2", "imagesNumber": 0, "ofertaId": 2, "price": 1000, "title": "title_2", "ubicationLat": 50, "ubicationLon": 200, "usuarioId": 1, "visibleOferta": 1
+  }
+]
+```
+
+- Crear un nuevo usuario
+<p>@POST</p>
+<p>/usuarios</p>
+acepta 2 tipos de JSON
+```json
+{
+  "username": "user_1", "email": "email_1", "password": "password_1"
+}
+```
+o con los datos de las imagenes
+```json
+{
+  "username": "user_1", "email": "email_1", "password": "password_1", "urlProfilePicture": "www.foto.cl", "urlProfileThumbnail": "www.thumb.cl"
+}
+```
+
 - Info del login
 <p>@POST</p>
 <p>/usuarios/login</p>
@@ -182,5 +244,34 @@ los JSON posibles son (dependiendo de si corresponden los datos):
 
 {
   "ERROR": "No existe un usuario con ese username"
+}
+```
+
+- Editar un usuario (datos que puede cambiar el mismo usuario, es decir, cualquiera menos: {type, reputation, permission, visibleUsuario})
+<p>@PUT</p>
+<p>/usuarios/{id}</p>
+se aceptan JSON con 1 o mas datos
+```json
+{
+  "username": "user_1", "email": "email_1", "password": "password_1", "urlProfilePicture": "www.foto.cl", "urlProfileThumbnail": "www.thumb.cl"
+}
+```
+
+- Editar un usuario {type, reputation, permission}
+<p>@PUT</p>
+<p>/usuarios/{id}/social</p>
+se aceptan JSON con 1 o mas datos
+```json
+{
+  "type": 1, "reputation": 1, "permission": 1
+}
+```
+
+- Editar un usuario {visible}
+<p>@PUT</p>
+<p>/usuarios/{id}/visible</p>
+```json
+{
+  "visible": 1
 }
 ```

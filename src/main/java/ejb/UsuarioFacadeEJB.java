@@ -37,41 +37,44 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 	}
 	
 	@Override
-	public Usuario editar(Usuario entity, Usuario antiguo){
-    	if(entity.getUsername() == null){
-    		entity.setUsername(antiguo.getUsername());
-    	}
-    	if(entity.getPassword() == null){
-    		entity.setPassword(antiguo.getPassword());
-    	}
-    	if(entity.getEmail() == null){
-    		entity.setEmail(antiguo.getEmail());
-    	}
-    	if(entity.getType() == 0){
-    		entity.setType(antiguo.getType());
-    	}
-    	if(entity.getReputation() == 0){
-    		entity.setReputation(antiguo.getReputation());
-    	}
-    	if(entity.getPermission() == 0){
-    		entity.setPermission(antiguo.getPermission());
-    	}
-    	if(entity.getUrlProfilePicture() == null){
-    		entity.setUrlProfilePicture(antiguo.getUrlProfilePicture());
-    	}
-    	if(entity.getUrlProfileThumbnail() == null){
-    		entity.setUrlProfileThumbnail(antiguo.getUrlProfileThumbnail());
-    	}
-    	if(entity.getVisibleUsuario() == 0){
-    		entity.setVisibleUsuario(antiguo.getVisibleUsuario());
-    	}
-    	if(entity.getReputation() == 0){
-    		entity.setReputation(antiguo.getReputation());
-    	}
-    	if(entity.getPermission() == 0){
-    		entity.setPermission(antiguo.getPermission());
-    	}
-    	return entity;
+	public Usuario editar(JsonObject datos, Usuario antiguo){
+    	try{
+    		antiguo.setUsername(datos.getString("username"));
+    	} catch(Exception e){}
+    	try{
+    		antiguo.setPassword(datos.getString("password"));
+    	} catch(Exception e){}
+    	try{
+    		antiguo.setEmail(datos.getString("email"));
+    	} catch(Exception e){}
+    	try{
+    		antiguo.setUrlProfilePicture(datos.getString("urlProfilePicture"));
+    	} catch(Exception e){}
+    	try{
+    		antiguo.setUrlProfileThumbnail(datos.getString("urlProfileThumbnail"));
+    	} catch(Exception e){}
+    	//el cambio de ambito "social" y visible se hace aparte
+    	return antiguo;
+	}
+	
+	@Override
+	public Usuario editarSocial(JsonObject datos, Usuario antiguo){
+		try{
+			antiguo.setType(datos.getInt("type"));
+		} catch (Exception e){}
+		try{
+			antiguo.setReputation(datos.getInt("reputation"));
+		} catch (Exception e){}
+		try{
+			antiguo.setPermission(datos.getInt("permission"));
+		} catch (Exception e){}
+		return antiguo;
+	}
+	
+	@Override
+	public Usuario editarVisible(JsonObject datos, Usuario antiguo){
+		antiguo.setVisibleUsuario(datos.getInt("visibleUsuario"));
+		return antiguo;
 	}
 	
 	@Override
@@ -100,6 +103,39 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 			jsonObjBuilder.add("ERROR", "No existe un usuario con ese username");
 			JsonObject jsonObj = jsonObjBuilder.build();
 			return Response.status(Response.Status.OK).entity(jsonObj).build();
+		}
+	}
+	
+	@Override
+	public Response crear(JsonObject datos){
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		try{
+			Usuario user = em.createNamedQuery("Usuario.findByUsername", Usuario.class)
+	        		.setParameter("username", datos.getString("username")).getSingleResult();
+			jsonObjBuilder.add("ERROR", "Ya existe un usiario con ese username, elija otro username y vuelva a intentarlo");
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+		} catch(Exception e){
+			Usuario elUsuario = new Usuario();
+			elUsuario.setUsername(datos.getString("username"));
+			elUsuario.setEmail(datos.getString("email"));
+			elUsuario.setPassword(datos.getString("password"));
+			elUsuario.setType(1);
+			elUsuario.setPermission(1);
+			elUsuario.setReputation(1);
+			elUsuario.setVisibleUsuario(1);
+			try{
+				elUsuario.setUrlProfilePicture(datos.getString("urlProfilePicture"));
+				elUsuario.setUrlProfileThumbnail(datos.getString("urlProfileThumbnail"));
+			} catch (Exception e2){
+				elUsuario.setUrlProfilePicture("no hay foto");
+				elUsuario.setUrlProfileThumbnail("no hay thumb");
+			}
+			this.create(elUsuario);
+			jsonObjBuilder.add("INFO", "Usuario creado exitosamente");
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+			//return elUsuario;
 		}
 	}
 

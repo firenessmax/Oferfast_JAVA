@@ -54,9 +54,23 @@ public class UsuarioService {
     }
 	
 	@POST
+	@Path("newAntiguo")
     @Consumes({"application/xml", "application/json"})
     public void create(Usuario entity) {
 		usuarioFacadeEJB.create(entity);
+    }
+	
+	@POST
+    @Consumes({"application/xml", "application/json"})
+    public Response crear(JsonObject entrada) {
+		if(entrada.getString("username").matches("[a-zA-z0-9_]+[a-zA-z0-9_.]*")){
+			return usuarioFacadeEJB.crear(entrada);
+		} else {
+			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+			jsonObjBuilder.add("ERROR", "El username no es valido");
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+		}
     }
 	
 	@POST
@@ -68,16 +82,68 @@ public class UsuarioService {
 	}
 
     @PUT
+    @Path("{id}/editAntiguo")
+    @Consumes({"application/xml", "application/json"})
+    public void edit(@PathParam("id") Integer id, Usuario entity) {
+    	entity.setUsuarioId(id.intValue());
+    	usuarioFacadeEJB.edit(entity);
+    }
+
+    @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    //public void edit(@PathParam("id") Integer id, Usuario entity) {
-    public void edit(@PathParam("id") Integer id, Usuario entity) {
-		entity.setUsuarioId(id.intValue());
+    public Response editar(@PathParam("id") Integer id, JsonObject entrada) {
+    	int bulean=0;//false
+    	try{
+    		String username = entrada.getString("username");
+    		bulean=1;
+    	} catch(Exception e){
+    		bulean=0;
+    	}
+    	if(bulean == 1){//se desea cambiar el username
+    		if(entrada.getString("username").matches("[a-zA-z0-9_]+[a-zA-z0-9_.]*")){
+    			Usuario aux = usuarioFacadeEJB.find(id);
+    			aux = usuarioFacadeEJB.editar(entrada, aux); //editar creado, no el que existe
+    	    	usuarioFacadeEJB.edit(aux);
+    	    	//respuesta
+    			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+    			jsonObjBuilder.add("INFO", "Datos actualizados");
+    			JsonObject jsonObj = jsonObjBuilder.build();
+    			return Response.status(Response.Status.OK).entity(jsonObj).build();
+    		} else {
+    			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+    			jsonObjBuilder.add("INFO", "Username no valido");
+    			JsonObject jsonObj = jsonObjBuilder.build();
+    			return Response.status(Response.Status.OK).entity(jsonObj).build();
+    		}
+    	} else {
+    		Usuario aux = usuarioFacadeEJB.find(id);
+			aux = usuarioFacadeEJB.editar(entrada, aux); //editar creado, no el que existe
+	    	usuarioFacadeEJB.edit(aux);
+	    	//respuesta
+			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+			jsonObjBuilder.add("INFO", "Datos actualizados");
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+    	}
+    }
+
+    @PUT
+    @Path("{id}/social")
+    @Consumes({"application/xml", "application/json"})
+    public void editSocial(@PathParam("id") Integer id, JsonObject entrada) {
     	Usuario aux = usuarioFacadeEJB.find(id);
-    	entity = usuarioFacadeEJB.editar(entity, aux); //editar creado, no el que existe
-    	usuarioFacadeEJB.edit(entity);
-    	//entity.setUsuarioId(id.intValue());
-    	//usuarioFacadeEJB.edit(entity);
+    	aux = usuarioFacadeEJB.editarSocial(entrada, aux);
+    	usuarioFacadeEJB.edit(aux);
+    }
+
+    @PUT
+    @Path("{id}/visible")
+    @Consumes({"application/xml", "application/json"})
+    public void editVisible(@PathParam("id") Integer id, JsonObject entrada) {
+    	Usuario aux = usuarioFacadeEJB.find(id);
+    	aux = usuarioFacadeEJB.editarVisible(entrada, aux);
+    	usuarioFacadeEJB.edit(aux);
     }
 
 }

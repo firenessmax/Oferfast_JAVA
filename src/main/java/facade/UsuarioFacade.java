@@ -24,9 +24,15 @@ public interface UsuarioFacade {
 
 	public List<Oferta> findOfertas(int id);
 
-	public Usuario editar(Usuario entity, Usuario antiguo);
+	public Usuario editar(JsonObject datos, Usuario antiguo);
+
+	public Usuario editarSocial(JsonObject datos, Usuario antiguo);
+	
+	public Usuario editarVisible(JsonObject datos, Usuario antiguo);
 	
 	public Response login(JsonObject datos);
+	
+	public Response crear(JsonObject datos);
 
 	public int count();
 
