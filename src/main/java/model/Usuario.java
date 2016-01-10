@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuario")
+@Table(name="Usuario")
 @NamedQueries({
 	@NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u"),
 	@NamedQuery(name="Usuario.findById", query="SELECT u FROM Usuario u WHERE u.usuarioId = :usuarioId"),

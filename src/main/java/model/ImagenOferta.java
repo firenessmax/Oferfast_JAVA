@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@Table(name="imagenOferta")
+@Table(name="ImagenOferta")
 @NamedQueries({
 	@NamedQuery(name="ImagenOferta.findAll", query="SELECT io FROM ImagenOferta io"),
 	@NamedQuery(name="ImagenOferta.findById", query="SELECT io FROM ImagenOferta io WHERE io.imagenOfertaId = :imagenOfertaId"),

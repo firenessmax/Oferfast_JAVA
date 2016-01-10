@@ -10,7 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuario_sigue_usuario")
+@Table(name="Usuario_sigue_Usuario")
 @IdClass(UsuarioSigueUsuarioPK.class)
 @NamedQuery(name="UsuarioSigueUsuario.findAll", query="SELECT usu FROM UsuarioSigueUsuario usu")
 public class UsuarioSigueUsuario implements Serializable {

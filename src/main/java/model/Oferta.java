@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
-@Table(name="oferta")
+@Table(name="Oferta")
 @NamedQueries({
 	@NamedQuery(name="Oferta.findAll", query="SELECT o FROM Oferta o"),
 	@NamedQuery(name="Oferta.findByOfertaId", query="SELECT o FROM Oferta o WHERE o.ofertaId = :ofertaId"),

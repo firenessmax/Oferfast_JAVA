@@ -10,7 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="medalla")
+@Table(name="Medalla")
 @NamedQueries({
 	@NamedQuery(name="Medalla.findAll", query="SELECT m FROM Medalla m"),
 	@NamedQuery(name="Medalla.ById", query="SELECT m FROM Medalla m WHERE m.medallaId = :medallaId"),

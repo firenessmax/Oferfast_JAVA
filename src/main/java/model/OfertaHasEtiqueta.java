@@ -13,7 +13,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="oferta_has_etiqueta")
+@Table(name="Oferta_has_Etiqueta")
 @IdClass(OfertaHasEtiquetaPK.class)
 @NamedQueries({
 	@NamedQuery(name="OfertaHasEtiqueta.findAll", query="SELECT ohe FROM OfertaHasEtiqueta ohe"),

@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="configuracion")
+@Table(name="Configuracion")
 @NamedQueries({
 	@NamedQuery(name="Configuracion.findAll", query="SELECT c FROM Configuracion c"),
 	@NamedQuery(name="Configuracion.findById", query="SELECT c FROM Configuracion c WHERE c.configuracionId = :configuracionId"),

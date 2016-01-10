@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="etiqueta")
+@Table(name="Etiqueta")
 @NamedQueries({
 	@NamedQuery(name="Etiqueta.findAll", query="SELECT e FROM Etiqueta e"),
 	@NamedQuery(name="Etiqueta.findById", query="SELECT e FROM Etiqueta e WHERE e.etiquetaId = :etiquetaId"),

@@ -10,7 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="usuario_like_comentario")
+@Table(name="Usuario_like_Comentario")
 @IdClass(UsuarioLikeComentarioPK.class)
 @NamedQuery(name="UsuarioLikeComentario.findAll", query="SELECT ulc FROM UsuarioLikeComentario ulc")
 public class UsuarioLikeComentario implements Serializable {
