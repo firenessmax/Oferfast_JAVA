@@ -2,6 +2,8 @@ package facade;
 
 import java.util.List;
 import javax.ejb.Local;
+import javax.json.JsonObject;
+
 import model.ImagenOferta;
 
 @Local
@@ -18,6 +20,8 @@ public interface ImagenOfertaFacade {
 	public List<ImagenOferta> findAll();
 
 	public List<ImagenOferta> findRange(int[] range);
+	
+	public List<ImagenOferta> addPorOferta(int cantidad, JsonObject entrada, int idOferta);
 
 	public int count();
 

@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.json.JsonArray;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -47,6 +48,13 @@ public class EtiquetaService {
     @Produces({"application/xml", "application/json"})
     public List<Oferta> findOfertas(@PathParam("id") Integer id) {
     	return etiquetaFacadeEJB.findOfertaByID(id);
+    }
+	
+	@POST
+    @Path("/testing")
+    @Consumes({"application/xml", "application/json"})
+    public List<Etiqueta> revisar(JsonArray lista) {
+		return etiquetaFacadeEJB.addPorOferta(lista);
     }
 	
 	@POST

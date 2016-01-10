@@ -65,7 +65,7 @@ public class EtiquetaFacadeEJB extends AbstractFacade<Etiqueta> implements Etiqu
 	public List<Etiqueta> addPorOferta(JsonArray lista){
 		List<Etiqueta> laLista = new ArrayList<>();
 		Etiqueta aux;
-		for(int i=0; i<lista.size(); i++){
+		for(int i=0; i<lista.size(); i++){//revisar, esta devolviendo todo
 			try{
 				//si la query resulta, es xq existe
 				aux = em.createNamedQuery("Etiqueta.findByName", Etiqueta.class)
@@ -75,11 +75,11 @@ public class EtiquetaFacadeEJB extends AbstractFacade<Etiqueta> implements Etiqu
 				aux = new Etiqueta();
 				aux.setName(lista.getString(i));
 				aux.setVisibleEtiqueta(1);
+				laLista.add(aux);
 			}			
 			//Etiqueta aux = new Etiqueta();
 			//aux.setName(lista.getString(i));
 			//hacer la conexion
-			laLista.add(aux);
 		}
 		//devuelve todas las etiquetas no existen
 		return laLista;

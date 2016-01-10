@@ -88,10 +88,15 @@ Ofertas
 - Escribir oferta que posee etiquetas (el que usaremos)
 <p>@POST</p>
 <p>/ofertas</p>
+Es importante colocar la cantidad de imagenes en imagesNumber
 ```json
 {
-  "title": "title_8", "description": "description_8", "ubicationLon":250, "ubicationLat":54, "price":1200, "imagesNumber":0, "visibleOferta":1, "usuarioId":2,
-  "tags":["tag_1","tag_2","tag_2","cocina"]
+  "title": "title_1", "description": "description_1", "ubicationLon":10, "ubicationLat":20, "price":1000, "imagesNumber":2, "visibleOferta":1, "usuarioId":1,
+  "tags":["tag_1","tag_2","tag_3"],
+  "imagenes":[
+      {"urlNormal":"urlNormal_1_1", "urlThumbnail":"urlThumbnail_1_1"},
+      {"urlNormal":"urlNormal_1_2", "urlThumbnail":"urlThumbnail_1_2"}
+      ]
 }
 ```
 

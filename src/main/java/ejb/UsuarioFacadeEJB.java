@@ -95,12 +95,12 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 					.add("urlProfilePicture",user.getUrlProfilePicture())
 					.add("urlProfileThumbnail",user.getUrlProfileThumbnail());
 			} else {
-				jsonObjBuilder.add("ERROR", "La constraseña no corresponde, vuelva a intentarlo");
+				jsonObjBuilder.add("INFO", "La password no corresponde, vuelva a intentarlo");
 			}
 			JsonObject jsonObj = jsonObjBuilder.build();
 			return Response.status(Response.Status.OK).entity(jsonObj).build();
 		} catch(Exception e){
-			jsonObjBuilder.add("ERROR", "No existe un usuario con ese username");
+			jsonObjBuilder.add("INFO", "No existe un usuario con ese username");
 			JsonObject jsonObj = jsonObjBuilder.build();
 			return Response.status(Response.Status.OK).entity(jsonObj).build();
 		}
@@ -112,7 +112,7 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 		try{
 			Usuario user = em.createNamedQuery("Usuario.findByUsername", Usuario.class)
 	        		.setParameter("username", datos.getString("username")).getSingleResult();
-			jsonObjBuilder.add("ERROR", "Ya existe un usiario con ese username, elija otro username y vuelva a intentarlo");
+			jsonObjBuilder.add("INFO", "Ya existe un usuario con ese username, elija otro username y vuelva a intentarlo");
 			JsonObject jsonObj = jsonObjBuilder.build();
 			return Response.status(Response.Status.OK).entity(jsonObj).build();
 		} catch(Exception e){

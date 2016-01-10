@@ -64,7 +64,14 @@ public class UsuarioService {
     @Consumes({"application/xml", "application/json"})
     public Response crear(JsonObject entrada) {
 		if(entrada.getString("username").matches("[a-zA-z0-9_]+[a-zA-z0-9_.]*")){
-			return usuarioFacadeEJB.crear(entrada);
+			if(entrada.getString("password").matches("[a-zA-z0-9]*")){
+				return usuarioFacadeEJB.crear(entrada);
+			} else {
+				JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+				jsonObjBuilder.add("ERROR", "La password posee caracteres invalidos");
+				JsonObject jsonObj = jsonObjBuilder.build();
+				return Response.status(Response.Status.OK).entity(jsonObj).build();
+			}
 		} else {
 			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
 			jsonObjBuilder.add("ERROR", "El username no es valido");
@@ -112,7 +119,7 @@ public class UsuarioService {
     			return Response.status(Response.Status.OK).entity(jsonObj).build();
     		} else {
     			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-    			jsonObjBuilder.add("INFO", "Username no valido");
+    			jsonObjBuilder.add("INFO", "Username inválido");
     			JsonObject jsonObj = jsonObjBuilder.build();
     			return Response.status(Response.Status.OK).entity(jsonObj).build();
     		}

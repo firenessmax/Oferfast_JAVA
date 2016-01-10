@@ -14,7 +14,6 @@ import javax.persistence.*;
 	@NamedQuery(name="ImagenOferta.findByIdVisible", query="SELECT io FROM ImagenOferta io WHERE io.imagenOfertaId = :imagenOfertaId AND io.visibleImagen = :visibleImagen"),
 	@NamedQuery(name="ImagenOferta.findByOfertaVisible", query="SELECT io FROM ImagenOferta io WHERE io.ofertaId = :ofertaId AND io.visibleImagen = :visibleImagen")
 })
-
 public class ImagenOferta implements Serializable {
 	private static final long serialVersionUID = 1L;
 

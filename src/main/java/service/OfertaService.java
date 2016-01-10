@@ -1,12 +1,16 @@
 package service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -16,8 +20,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
+import ejb.ImagenOfertaFacadeEJB;
 import facade.EtiquetaFacade;
+import facade.ImagenOfertaFacade;
 import facade.OfertaFacade;
 import facade.OfertaHasEtiquetaFacade;
 import model.Etiqueta;
@@ -37,6 +44,10 @@ public class OfertaService {
 
 	@EJB 
 	OfertaHasEtiquetaFacade ofertaHasEtiquetaFacadeEJB;
+	
+	@EJB 
+	ImagenOfertaFacade imagenOfertaFacadeEJB;
+	
 	
 	Logger logger = Logger.getLogger(OfertaService.class.getName());
 	
@@ -110,41 +121,57 @@ public class OfertaService {
 	@POST
     @Consumes({"application/xml", "application/json"})
 	//aceptar de entrada cualquier JSON, y separarlo, verificar las etiquetas, etc etc etc
-    public int createOferta(JsonObject entrada) {
+    public String createOferta(JsonObject entrada) {
+		String respuesta="";
 		//se crea la oferta
 		Oferta laOferta = ofertaFacadeEJB.crear(entrada);
 		//se crea la oferta en la BD
 		ofertaFacadeEJB.create(laOferta);
 		//se obtiene la clase oferta q esta en BD (ahora tiene el valor de la ID)
 		laOferta = ofertaFacadeEJB.findByOferta(laOferta);
+		respuesta +="Oferta creada";
 		//se ven las etiquetas que estan
 		try{
 			//existen etiquetas
 			if(entrada.getJsonArray("tags").size() > 0){
 				//verificar si existe el tag
 				List<Etiqueta> listaTag = etiquetaFacadeEJB.addPorOferta(entrada.getJsonArray("tags"));
-				if(listaTag.isEmpty()){
+				//respuesta += listaTag.get(0).getName();
+				if(listaTag.isEmpty() == false){
+					//respuesta += " listaTag.size(): "+listaTag.size();
 					for(int i=0; i<listaTag.size(); i++){
+						//respuesta += " "+i+" listaTag(0): "+listaTag.get(i).getName();
 						//se guardan las nuevas etiquetas
 						etiquetaFacadeEJB.create(listaTag.get(i));
+						//aqui muere porque addPorOferta los devvuelve todos
+						//respuesta += " "+i+" listaTag(0): "+listaTag.get(i).getName();
 					}
 				}
 				//una vez creadas las etiquetas q no existen, se crean las "conexiones"
 				//para eso, se crean las OfertaHasEtiqueta con la Oferta y los nombres de las etiquetas existentes
 				List<OfertaHasEtiqueta> listaOHA = ofertaHasEtiquetaFacadeEJB.createByOfertaEtiqueta(laOferta, entrada.getJsonArray("tags"));
-				for(int i=0; i<listaTag.size(); i++){
+				for(int i=0; i<listaOHA.size(); i++){
 					//se guardan en BD, todas las OfertaHasEtiqueta
 					ofertaHasEtiquetaFacadeEJB.create(listaOHA.get(i));
 				}
-				return entrada.getJsonArray("tags").size();
-			} else {
-				return -1;
 			}
+			respuesta +=" Etiquetas creadas y conectadas ("+entrada.getJsonArray("tags").size()+")";
 		} catch(Exception e){
-			return -2;
+			respuesta +=" No tiene etiquetas ("+entrada.getJsonArray("tags").size()+")";
+		} 
+		//crear imagenes de oferta
+		int imagesNumber = laOferta.getImagesNumber();
+		if(imagesNumber>0){
+			List<ImagenOferta> listaIO = imagenOfertaFacadeEJB.addPorOferta(imagesNumber, entrada, laOferta.getOfertaId());
+			for(int i=0; i<imagesNumber; i++){
+				//se guardan en BD, todas las ImagenOferta
+				imagenOfertaFacadeEJB.create(listaIO.get(i));
+			}
+			respuesta +="\nImagenes creadas";
+		} else {
+			respuesta +="\nNo tiene imagenes";
 		}
-		//return null;
-		//falta crear etiquetas y relaciones
+		return respuesta;
     }
 
     @PUT

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +16,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import facade.OfertaHasEtiquetaFacade;
+import model.Etiqueta;
+import model.Oferta;
 import model.OfertaHasEtiqueta;
 
 @Path("/ofertaHasEtiqueta")
@@ -51,6 +55,15 @@ public class OfertaHasEtiquetaService {
     public OfertaHasEtiqueta create(OfertaHasEtiqueta entity) {
 		ofertaHasEtiquetaFacadeEJB.create(entity);
 		return entity;
+    }
+	
+	@POST
+    @Path("/testing")
+    @Consumes({"application/xml", "application/json"})
+    public List<OfertaHasEtiqueta> revisar(JsonObject entity) {
+		Oferta aux = new Oferta();
+		aux.setOfertaId(99);
+		return ofertaHasEtiquetaFacadeEJB.createByOfertaEtiqueta(aux, entity.getJsonArray("tags"));
     }
 
     @PUT
