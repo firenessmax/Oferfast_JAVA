@@ -132,7 +132,10 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 				elUsuario.setUrlProfileThumbnail("no hay thumb");
 			}
 			this.create(elUsuario);
+			Usuario user = em.createNamedQuery("Usuario.findByUsername", Usuario.class)
+	        		.setParameter("username", elUsuario.getUsername()).getSingleResult();
 			jsonObjBuilder.add("INFO", "Usuario creado exitosamente");
+			jsonObjBuilder.add("usuarioId",user.getUsuarioId());
 			JsonObject jsonObj = jsonObjBuilder.build();
 			return Response.status(Response.Status.OK).entity(jsonObj).build();
 			//return elUsuario;

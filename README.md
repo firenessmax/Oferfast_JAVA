@@ -224,6 +224,20 @@ o con los datos de las imagenes
   "username": "user_1", "email": "email_1", "password": "password_1", "urlProfilePicture": "www.foto.cl", "urlProfileThumbnail": "www.thumb.cl"
 }
 ```
+devuelve un json con 2 posibles opciones:
+```json
+{
+  "INFO": "Usuario creado exitosamente", "usuarioId": 1
+}
+```
+o
+```json
+{
+  "INFO": "Ya existe un usuario con ese username, elija otro username y vuelva a intentarlo"
+}
+```
+
+
 
 - Info del login
 <p>@POST</p>
