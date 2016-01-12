@@ -317,3 +317,69 @@ se aceptan JSON con 1 o mas datos
   "visible": 1
 }
 ```
+
+
+
+
+Imagen Ofertas
+--------
+
+- Obtener una lista de imagenes
+<p>@GET</p>
+<p>/imagenes</p>
+```json
+[
+  {
+    "imagenOfertaId": 2, "ofertaId": 17, "urlNormal": "urlNormal_16", "urlThumbnail": "urlThumbnail_16", "visibleImagen": 1
+  },{
+    "imagenOfertaId": 3, "ofertaId": 17, "urlNormal": "urlNormal_16_2", "urlThumbnail": "urlThumbnail_16_2", "visibleImagen": 1
+  },{
+    "imagenOfertaId": 4, "ofertaId": 18, "urlNormal": "urlNormal_18", "urlThumbnail": "urlThumbnail_18", "visibleImagen": 1
+  }
+]
+```
+
+- Obtener una lista de imagenes
+<p>@GET</p>
+<p>/imagenes</p>
+```json
+[
+  {
+    "imagenOfertaId": 2, "ofertaId": 17, "urlNormal": "urlNormal_16", "urlThumbnail": "urlThumbnail_16", "visibleImagen": 1
+  },{
+    "imagenOfertaId": 3, "ofertaId": 17, "urlNormal": "urlNormal_16_2", "urlThumbnail": "urlThumbnail_16_2", "visibleImagen": 1
+  },{
+    "imagenOfertaId": 4, "ofertaId": 18, "urlNormal": "urlNormal_18", "urlThumbnail": "urlThumbnail_18", "visibleImagen": 1
+  }
+]
+```
+
+- Obtener una imagen
+<p>@GET</p>
+<p>/imagenes/{id}</p>
+```json
+{
+    "imagenOfertaId": 2, "ofertaId": 17, "urlNormal": "urlNormal_16", "urlThumbnail": "urlThumbnail_16", "visibleImagen": 1
+}
+```
+
+- Agregar una imagenes
+<p>@POST</p>
+<p>/imagenes/addMultiple</p>
+```json
+  {"ofertaId":1, "urlNormal":"urlNormal_1_2313", "urlThumbnail":"urlThumbnail_1_2313"}
+```
+
+- Agregar una lista de imagenes
+<p>@POST</p>
+<p>/imagenes/addMultiple</p>
+```json
+{
+    "ofertaId":2,
+    "imagenes":[
+            {"urlNormal":"urlNormal_2_1","urlThumbnail":"urlThumbnail_2_1"},
+            {"urlNormal":"urlNormal_2_2","urlThumbnail":"urlThumbnail_2_2"},
+            {"urlNormal":"urlNormal_2_3","urlThumbnail":"urlThumbnail_2_3"}
+        ]
+}
+```
