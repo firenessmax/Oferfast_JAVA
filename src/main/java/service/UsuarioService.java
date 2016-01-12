@@ -47,10 +47,24 @@ public class UsuarioService {
     }
 	
     @GET
-    @Path("{id}/ofertas")
+    @Path("{id}/ofertas") //solo las visibles
     @Produces({"application/xml", "application/json"})
     public List<Oferta> findOfertas(@PathParam("id") Integer id) {
         return usuarioFacadeEJB.findOfertas(id);
+    }
+	
+    @GET
+    @Path("{id}/cantidad") //solo las visibles
+    @Produces({"application/xml", "application/json"})
+    public Response findCantidadOfertas(@PathParam("id") Integer id) {
+        return usuarioFacadeEJB.findCantidadOfertas(id);
+    }
+	
+    @GET
+    @Path("{id}/ofertasAll") //todas
+    @Produces({"application/xml", "application/json"})
+    public List<Oferta> findAllOfertas(@PathParam("id") Integer id) {
+        return usuarioFacadeEJB.findAllOfertas(id);
     }
 	
 	@POST
@@ -151,6 +165,15 @@ public class UsuarioService {
     public void editVisible(@PathParam("id") Integer id, JsonObject entrada) {
     	Usuario aux = usuarioFacadeEJB.find(id);
     	aux = usuarioFacadeEJB.editarVisible(entrada, aux);
+    	usuarioFacadeEJB.edit(aux);
+    }
+
+    @PUT
+    @Path("{id}/delete")
+    @Consumes({"application/xml", "application/json"})
+    public void editDelete(@PathParam("id") Integer id) {
+    	Usuario aux = usuarioFacadeEJB.find(id);
+    	aux = usuarioFacadeEJB.editarDelete(aux);
     	usuarioFacadeEJB.edit(aux);
     }
 

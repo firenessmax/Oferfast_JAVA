@@ -40,6 +40,7 @@ public class ImagenOfertaService {
     @Consumes({"application/xml", "application/json"})
     public void create(ImagenOferta entity) {
 		imagenOfertaFacadeEJB.create(entity);
+		//modificar cantidadImagenes en la oferta
     }
 
     @PUT

@@ -117,6 +117,9 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 		//laOferta.setDate(Timestamp.valueOf(entity.getString("date")));
 		laOferta.setImagesNumber(entity.getInt("imagesNumber"));
 		
+		java.util.Date date= new java.util.Date();
+		laOferta.setDate(new Timestamp(date.getTime()));
+		
 		//trabajando en esta wea
 		return laOferta;
 		//return aux;

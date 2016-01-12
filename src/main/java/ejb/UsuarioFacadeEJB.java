@@ -31,9 +31,25 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 	}
 
 	@Override
-	public List<Oferta> findOfertas(int id){
+	public List<Oferta> findAllOfertas(int id){
 		return em.createNamedQuery("Oferta.findByUsuario", Oferta.class)
         		.setParameter("usuarioId", id).getResultList();
+	}
+
+	@Override
+	public List<Oferta> findOfertas(int id){
+		return em.createNamedQuery("Oferta.findByUsuarioVisible", Oferta.class)
+        		.setParameter("usuarioId", id).setParameter("visibleOferta", 1).getResultList();
+	}
+
+	@Override
+	public Response findCantidadOfertas(int id){
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		List<Oferta> lista = em.createNamedQuery("Oferta.findByUsuarioVisible", Oferta.class)
+        		.setParameter("usuarioId", id).setParameter("visibleOferta", 1).getResultList();
+		jsonObjBuilder.add("cantidad", lista.size());
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
 	}
 	
 	@Override
@@ -74,6 +90,12 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 	@Override
 	public Usuario editarVisible(JsonObject datos, Usuario antiguo){
 		antiguo.setVisibleUsuario(datos.getInt("visibleUsuario"));
+		return antiguo;
+	}
+	
+	@Override
+	public Usuario editarDelete(Usuario antiguo){
+		antiguo.setVisibleUsuario(0);
 		return antiguo;
 	}
 	

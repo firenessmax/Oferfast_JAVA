@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -38,8 +39,10 @@ public class ComentarioService {
 	
 	@POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Comentario entity) {
-		comentarioFacadeEJB.create(entity);
+    public void create(JsonObject entity) {
+		Comentario comment = comentarioFacadeEJB.crear(entity);
+		comentarioFacadeEJB.create(comment);
+		//comment = comentarioFacadeEJB.findByAll();
     }
 
     @PUT

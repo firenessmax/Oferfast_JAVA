@@ -29,6 +29,8 @@ import javax.persistence.*;
 	@NamedQuery(name="Oferta.findByUbicationLonLat", query="SELECT o FROM Oferta o WHERE o.ubicationLon = :ubicationLon AND o.ubicationLat = :ubicationLat"),
 	@NamedQuery(name="Oferta.findByOferta", query="SELECT o FROM Oferta o WHERE o.usuarioId = :usuarioId AND "
 			+ "o.title = :title AND o.price = :price AND o.description = :description AND o.ubicationLon = :ubicationLon AND o.ubicationLat = :ubicationLat")
+	
+	
 })
 public class Oferta implements Serializable {
 	private static final long serialVersionUID = 1L;

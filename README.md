@@ -76,6 +76,20 @@ Ofertas
 ]
 ```
 
+- Obtener las imagenes de una oferta
+<p>@GET</p>
+<p>/oferta/{id}/imagenes</p>
+```json
+[
+  {
+    "imagenOfertaId": 14, "ofertaId": 23, "urlNormal": "urlNormal_23", "urlThumbnail": "urlThumbnail_23", "visibleImagen": 1
+  },
+  {
+    "imagenOfertaId": 15, "ofertaId": 23, "urlNormal": "urlNormal_23_2", "urlThumbnail": "urlThumbnail_23_2", "visibleImagen": 1
+  }
+]
+```
+
 - Escribir oferta
 <p>@POST</p>
 <p>/ofertas/newAntiguo</p>
@@ -207,6 +221,15 @@ Usuarios
     "date": "2016-01-06T21:22:06.208709", "description": "description_2", "imagesNumber": 0, "ofertaId": 2, "price": 1000, "title": "title_2", "ubicationLat": 50, "ubicationLon": 200, "usuarioId": 1, "visibleOferta": 1
   }
 ]
+```
+
+- Obtener la cantidad de ofertas de un usuario
+<p>@GET</p>
+<p>/usuarios/{id}/cantidad</p>
+```json
+{
+    "cantidad":1;
+}
 ```
 
 - Crear un nuevo usuario

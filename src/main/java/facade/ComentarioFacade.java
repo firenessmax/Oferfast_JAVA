@@ -2,6 +2,8 @@ package facade;
 
 import java.util.List;
 
+import javax.json.JsonObject;
+
 import model.Comentario;
 
 public interface ComentarioFacade {
@@ -17,6 +19,8 @@ public interface ComentarioFacade {
 	public List<Comentario> findAll();
 
 	public List<Comentario> findRange(int[] range);
+	
+	public Comentario crear(JsonObject entity);
 
 	public int count();
 
