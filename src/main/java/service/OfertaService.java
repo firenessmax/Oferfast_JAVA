@@ -177,7 +177,7 @@ public class OfertaService {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Oferta entity) {
+    public Response edit(@PathParam("id") Integer id, Oferta entity) {
     	entity.setOfertaId(id.intValue());
     	Oferta aux = ofertaFacadeEJB.find(id);
     	entity = ofertaFacadeEJB.editar(entity, aux);
