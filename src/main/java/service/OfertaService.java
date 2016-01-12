@@ -121,7 +121,7 @@ public class OfertaService {
 	@POST
     @Consumes({"application/xml", "application/json"})
 	//aceptar de entrada cualquier JSON, y separarlo, verificar las etiquetas, etc etc etc
-    public String createOferta(JsonObject entrada) {
+    public Response createOferta(JsonObject entrada) {
 		String respuesta="";
 		//se crea la oferta
 		Oferta laOferta = ofertaFacadeEJB.crear(entrada);
@@ -171,7 +171,10 @@ public class OfertaService {
 		} else {
 			respuesta +="\nNo tiene imagenes";
 		}
-		return respuesta;
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		jsonObjBuilder.add("INFO", respuesta);
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 
     @PUT
