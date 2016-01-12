@@ -5,6 +5,7 @@ import java.util.List;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
+import model.Comentario;
 import model.Oferta;
 import model.Usuario;
 
@@ -25,6 +26,8 @@ public interface UsuarioFacade {
 	public List<Oferta> findAllOfertas(int id);
 
 	public List<Oferta> findOfertas(int id);
+
+	public List<Comentario> findComentarios(int id);
 
 	public Usuario editar(JsonObject datos, Usuario antiguo);
 

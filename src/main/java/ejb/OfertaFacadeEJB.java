@@ -15,6 +15,7 @@ import facade.AbstractFacade;
 import facade.OfertaFacade;
 import model.OfertaHasEtiqueta;
 import model.Usuario;
+import model.Comentario;
 import model.Etiqueta;
 import model.Oferta;
 import model.ImagenOferta;
@@ -146,5 +147,11 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 				.setParameter("ubicationLon", entity.getUbicationLon())
 				.setParameter("ubicationLat", entity.getUbicationLat())
 				.getSingleResult();
+	}
+
+	@Override
+	public List<Comentario> findComentarios(int id){
+		return em.createNamedQuery("Comentario.findByOfertaVisible", Comentario.class)
+        		.setParameter("ofertaId", id).setParameter("visibleComentario", 1).getResultList();
 	}
 }

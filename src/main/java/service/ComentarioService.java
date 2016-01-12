@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.EJB;
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,6 +14,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import facade.ComentarioFacade;
 import model.Comentario;
@@ -39,10 +42,14 @@ public class ComentarioService {
 	
 	@POST
     @Consumes({"application/xml", "application/json"})
-    public void create(JsonObject entity) {
+    public Response create(JsonObject entity) {
 		Comentario comment = comentarioFacadeEJB.crear(entity);
 		comentarioFacadeEJB.create(comment);
-		//comment = comentarioFacadeEJB.findByAll();
+		//respuesta
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		jsonObjBuilder.add("INFO", "Comentarios creados correctamente");
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 
     @PUT

@@ -27,6 +27,7 @@ import facade.EtiquetaFacade;
 import facade.ImagenOfertaFacade;
 import facade.OfertaFacade;
 import facade.OfertaHasEtiquetaFacade;
+import model.Comentario;
 import model.Etiqueta;
 import model.ImagenOferta;
 import model.Oferta;
@@ -93,6 +94,13 @@ public class OfertaService {
     @Produces({"application/xml", "application/json"})
     public List<Etiqueta> findEtiquetas(@PathParam("id") Integer id) {
         return ofertaFacadeEJB.findEtiquetaByID(id);
+    }	
+	
+	@GET
+    @Path("{id}/comentarios")
+    @Produces({"application/xml", "application/json"})
+	public List<Comentario> findComentarios(@PathParam("id") Integer id) {
+        return ofertaFacadeEJB.findComentarios(id);
     }
 	
 	@GET

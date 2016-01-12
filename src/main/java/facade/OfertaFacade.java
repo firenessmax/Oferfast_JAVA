@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.json.JsonObject;
 
+import model.Comentario;
 import model.Etiqueta;
 import model.ImagenOferta;
 import model.Oferta;
@@ -26,6 +27,8 @@ public interface OfertaFacade {
 	public List<Oferta> findRange(int[] range);
 	
 	public List<Etiqueta> findEtiquetaByID(int id);
+	
+	public List<Comentario> findComentarios(int id);
 	
 	public List<ImagenOferta> findImagenByID(int id);
 	

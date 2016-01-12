@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import facade.AbstractFacade;
 import facade.UsuarioFacade;
+import model.Comentario;
 import model.Oferta;
 import model.Usuario;
 
@@ -40,6 +41,12 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 	public List<Oferta> findOfertas(int id){
 		return em.createNamedQuery("Oferta.findByUsuarioVisible", Oferta.class)
         		.setParameter("usuarioId", id).setParameter("visibleOferta", 1).getResultList();
+	}
+
+	@Override
+	public List<Comentario> findComentarios(int id){
+		return em.createNamedQuery("Comentario.findByUsuarioVisible", Comentario.class)
+        		.setParameter("usuarioId", id).setParameter("visibleComentario", 1).getResultList();
 	}
 
 	@Override

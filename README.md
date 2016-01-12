@@ -90,6 +90,19 @@ Ofertas
 ]
 ```
 
+- Obtener los comentarios de una oferta
+<p>@GET</p>
+<p>/usuarios/{id}/comentarios</p>
+```json
+[
+  {
+    "comentarioId": 1, "date": "2016-01-12T12:05:42.57", "ofertaId": 1, "text": "buena la oferta, gracias","usuarioId": 1, "visibleComentario": 1
+  },{
+    "comentarioId": 2, "date": "2016-01-12T12:06:19.882", "ofertaId": 1, "text": "gracias", "usuarioId": 3, "visibleComentario": 1
+  }
+]
+```
+
 - Escribir oferta
 <p>@POST</p>
 <p>/ofertas/newAntiguo</p>
@@ -110,7 +123,7 @@ Es importante colocar la cantidad de imagenes en imagesNumber
   "imagenes":[
       {"urlNormal":"urlNormal_1_1", "urlThumbnail":"urlThumbnail_1_1"},
       {"urlNormal":"urlNormal_1_2", "urlThumbnail":"urlThumbnail_1_2"}
-      ]
+    ]
 }
 ```
 
@@ -232,6 +245,19 @@ Usuarios
 }
 ```
 
+- Obtener los comentarios hechos por un usuario
+<p>@GET</p>
+<p>/usuarios/{id}/comentarios</p>
+```json
+[
+  {
+    "comentarioId": 1, "date": "2016-01-12T12:05:42.57", "ofertaId": 1, "text": "buena la oferta, gracias", "usuarioId": 1, "visibleComentario": 1
+  },{
+    "comentarioId": 3, "ofertaId": 2, "text": "excelente, justo lo que estaba buscando", "usuarioId": 1, "visibleComentario": 1
+  }
+]
+```
+
 - Crear un nuevo usuario
 <p>@POST</p>
 <p>/usuarios</p>
@@ -339,21 +365,6 @@ Imagen Ofertas
 ]
 ```
 
-- Obtener una lista de imagenes
-<p>@GET</p>
-<p>/imagenes</p>
-```json
-[
-  {
-    "imagenOfertaId": 2, "ofertaId": 17, "urlNormal": "urlNormal_16", "urlThumbnail": "urlThumbnail_16", "visibleImagen": 1
-  },{
-    "imagenOfertaId": 3, "ofertaId": 17, "urlNormal": "urlNormal_16_2", "urlThumbnail": "urlThumbnail_16_2", "visibleImagen": 1
-  },{
-    "imagenOfertaId": 4, "ofertaId": 18, "urlNormal": "urlNormal_18", "urlThumbnail": "urlThumbnail_18", "visibleImagen": 1
-  }
-]
-```
-
 - Obtener una imagen
 <p>@GET</p>
 <p>/imagenes/{id}</p>
@@ -361,13 +372,6 @@ Imagen Ofertas
 {
     "imagenOfertaId": 2, "ofertaId": 17, "urlNormal": "urlNormal_16", "urlThumbnail": "urlThumbnail_16", "visibleImagen": 1
 }
-```
-
-- Agregar una imagenes
-<p>@POST</p>
-<p>/imagenes/addMultiple</p>
-```json
-  {"ofertaId":1, "urlNormal":"urlNormal_1_2313", "urlThumbnail":"urlThumbnail_1_2313"}
 ```
 
 - Agregar una lista de imagenes
@@ -383,3 +387,49 @@ Imagen Ofertas
         ]
 }
 ```
+
+
+
+
+
+
+Comentarios
+--------
+
+- Obtener una lista de comentarios
+<p>@GET</p>
+<p>/comentarios</p>
+```json
+[
+  {
+    "comentarioId": 1, "date": "2016-01-12T12:05:42.57", "ofertaId": 1, "text": "buena la oferta, gracias", "usuarioId": 1, "visibleComentario": 1
+  },{
+    "comentarioId": 2, "date": "2016-01-12T12:06:19.882", "ofertaId": 1, "text": "gracias", "usuarioId": 3, "visibleComentario": 1
+  },{
+    "comentarioId": 3, "date": "2016-01-12T12:06:38.801", "ofertaId": 2, "text": "excelente, justo lo que estaba buscando", "usuarioId": 1, "visibleComentario": 1
+  }
+]
+```
+
+- Obtener un comentario
+<p>@GET</p>
+<p>/comentarios/{id}</p>
+```json
+{
+  "comentarioId": 1, "date": "2016-01-12T12:05:42.57", "ofertaId": 1, "text": "buena la oferta, gracias", "usuarioId": 1, "visibleComentario": 1
+}
+```
+
+- Agregar un comentario
+<p>@POST</p>
+<p>/comentarios</p>
+```json
+{
+    "usuarioId":1, "ofertaId":1, "text":"buena la oferta, gracias"
+}
+```
+
+
+
+
+

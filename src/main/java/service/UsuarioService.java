@@ -18,7 +18,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import facade.ComentarioFacade;
 import facade.UsuarioFacade;
+import model.Comentario;
 import model.Oferta;
 import model.Usuario;
 
@@ -51,6 +53,13 @@ public class UsuarioService {
     @Produces({"application/xml", "application/json"})
     public List<Oferta> findOfertas(@PathParam("id") Integer id) {
         return usuarioFacadeEJB.findOfertas(id);
+    }
+	
+    @GET
+    @Path("{id}/comentarios") //solo las visibles
+    @Produces({"application/xml", "application/json"})
+    public List<Comentario> findComentarios(@PathParam("id") Integer id) {
+        return usuarioFacadeEJB.findComentarios(id);
     }
 	
     @GET
