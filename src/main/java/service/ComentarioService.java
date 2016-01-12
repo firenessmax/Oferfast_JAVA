@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import facade.ComentarioFacade;
 import model.Comentario;
+import model.Usuario;
 
 @Path("/comentarios")
 public class ComentarioService {
@@ -55,8 +56,22 @@ public class ComentarioService {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, Comentario entity) {
-    	entity.setComentarioId(id.intValue());
-    	comentarioFacadeEJB.edit(entity);
+    public void edit(@PathParam("id") Integer id, JsonObject entity) {
+    	Comentario comment = comentarioFacadeEJB.editar(id.intValue(), entity);
+    	comentarioFacadeEJB.edit(comment);
+    }
+
+    @PUT
+    @Path("{id}/delete")
+    @Consumes({"application/xml", "application/json"})
+    public Response editDelete(@PathParam("id") Integer id) {
+    	Comentario aux = comentarioFacadeEJB.find(id);
+    	aux = comentarioFacadeEJB.editarDelete(aux);
+    	comentarioFacadeEJB.edit(aux);
+    	//respuesta
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		jsonObjBuilder.add("INFO", "Comentario eliminado");
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 }

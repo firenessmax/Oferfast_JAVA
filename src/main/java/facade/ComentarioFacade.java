@@ -21,6 +21,10 @@ public interface ComentarioFacade {
 	public List<Comentario> findRange(int[] range);
 	
 	public Comentario crear(JsonObject entity);
+	
+	public Comentario editar(int id, JsonObject entity);
+	
+	public Comentario editarDelete(Comentario antiguo);
 
 	public int count();
 

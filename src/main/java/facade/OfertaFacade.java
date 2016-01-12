@@ -43,6 +43,8 @@ public interface OfertaFacade {
 	public Oferta findByLonLat(Double Lon, Double Lat);
 
 	public Oferta findByOferta(Oferta entity);
+	
+	public Oferta editarDelete(Oferta antigua);
 
 	public int count();
 }

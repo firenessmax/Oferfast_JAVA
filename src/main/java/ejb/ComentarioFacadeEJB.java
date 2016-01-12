@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import facade.AbstractFacade;
 import facade.ComentarioFacade;
 import model.Comentario;
+import model.Usuario;
 
 @Stateless
 public class ComentarioFacadeEJB extends AbstractFacade<Comentario> implements ComentarioFacade {
@@ -38,6 +39,19 @@ public class ComentarioFacadeEJB extends AbstractFacade<Comentario> implements C
 		nuevo.setVisibleComentario(1);
 		
 		return nuevo;
+	}
+	
+	@Override
+	public Comentario editar(int id, JsonObject entity){
+		Comentario comment = this.find(id);
+		comment.setText(entity.getString("text"));
+		return comment;
+	}
+	
+	@Override
+	public Comentario editarDelete(Comentario antiguo){
+		antiguo.setVisibleComentario(0);
+		return antiguo;
 	}
 
 }

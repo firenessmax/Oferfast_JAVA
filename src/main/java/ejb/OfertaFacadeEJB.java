@@ -154,4 +154,10 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 		return em.createNamedQuery("Comentario.findByOfertaVisible", Comentario.class)
         		.setParameter("ofertaId", id).setParameter("visibleComentario", 1).getResultList();
 	}
+	
+	@Override
+	public Oferta editarDelete(Oferta antigua){
+		antigua.setVisibleOferta(0);
+		return antigua;
+	}
 }

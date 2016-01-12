@@ -76,7 +76,6 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
     	try{
     		antiguo.setUrlProfileThumbnail(datos.getString("urlProfileThumbnail"));
     	} catch(Exception e){}
-    	//el cambio de ambito "social" y visible se hace aparte
     	return antiguo;
 	}
 	

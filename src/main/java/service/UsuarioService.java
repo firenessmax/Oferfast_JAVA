@@ -180,10 +180,15 @@ public class UsuarioService {
     @PUT
     @Path("{id}/delete")
     @Consumes({"application/xml", "application/json"})
-    public void editDelete(@PathParam("id") Integer id) {
+    public Response editDelete(@PathParam("id") Integer id) {
     	Usuario aux = usuarioFacadeEJB.find(id);
     	aux = usuarioFacadeEJB.editarDelete(aux);
     	usuarioFacadeEJB.edit(aux);
+    	//respuesta
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		jsonObjBuilder.add("INFO", "Usuario eliminado");
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 
 }
