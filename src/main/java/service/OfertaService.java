@@ -182,6 +182,11 @@ public class OfertaService {
     	Oferta aux = ofertaFacadeEJB.find(id);
     	entity = ofertaFacadeEJB.editar(entity, aux);
     	ofertaFacadeEJB.edit(entity);
+    	//respuesta
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		jsonObjBuilder.add("INFO", "Datos actualizados");
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 
 }
