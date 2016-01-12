@@ -208,7 +208,7 @@ public class OfertaService {
     }
 
     @PUT
-    @Path("{id}/delete")
+    @Path("{id}/del")
     @Consumes({"application/xml", "application/json"})
     public Response editDelete(@PathParam("id") Integer id) {
     	Oferta aux = ofertaFacadeEJB.find(id);
