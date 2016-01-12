@@ -134,7 +134,7 @@ public class UsuarioService {
     			return Response.status(Response.Status.OK).entity(jsonObj).build();
     		} else {
     			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-    			jsonObjBuilder.add("INFO", "Contrase\164a inv\160lido");
+    			jsonObjBuilder.add("INFO", "El username posee caracteres invalidos");
     			JsonObject jsonObj = jsonObjBuilder.build();
     			return Response.status(Response.Status.OK).entity(jsonObj).build();
     		}
