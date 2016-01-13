@@ -89,6 +89,22 @@ Ofertas
   }
 ]
 ```
+devuelve un Json como el siguiente:
+```json
+{
+  "ofertaId":23,
+  "imagenes":
+    [
+      {
+        "imagenOfertaId": 14, "ofertaId": 23, "urlNormal": "urlNormal_23", "urlThumbnail": "urlThumbnail_23", "visibleImagen": 1
+      },
+      {
+        "imagenOfertaId": 15, "ofertaId": 23, "urlNormal": "urlNormal_23_2", "urlThumbnail": "urlThumbnail_23_2", "visibleImagen": 1
+      }
+    ]
+}
+```
+
 
 - Obtener los comentarios de una oferta
 <p>@GET</p>

@@ -114,7 +114,7 @@ public class OfertaService {
 	@GET
     @Path("{id}/imagenes")
     @Produces({"application/xml", "application/json"})
-    public List<ImagenOferta> findImagenes(@PathParam("id") Integer id) {
+    public Response findImagenes(@PathParam("id") Integer id) {
         return ofertaFacadeEJB.findImagenByID(id);
     }
 	

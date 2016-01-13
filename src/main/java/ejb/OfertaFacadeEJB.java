@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.Response;
 
 import facade.AbstractFacade;
 import facade.OfertaFacade;
@@ -56,8 +60,28 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 	}
 	
 	@Override
-	public List<ImagenOferta> findImagenByID(int id){
-		return em.createNamedQuery("ImagenOferta.findByOferta", ImagenOferta.class).setParameter("ofertaId", id).getResultList();
+	public Response findImagenByID(int id){
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		List<ImagenOferta> lista = em.createNamedQuery("ImagenOferta.findByOferta", ImagenOferta.class).setParameter("ofertaId", id).getResultList();
+		if(lista.isEmpty()){
+			jsonObjBuilder.add("INFO", "La oferta no posee imagenes");
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+		} else {
+			jsonObjBuilder.add("ofertaId", lista.get(0).getOfertaId());
+			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+			for(int i=0; i<lista.size(); i++){
+				JsonObjectBuilder jsonObjBuilder2 = Json.createObjectBuilder();
+				jsonObjBuilder2.add("urlNormal", lista.get(i).getUrlNormal());
+				jsonObjBuilder2.add("urlThumbnail", lista.get(i).getUrlThumbnail());
+				//agregar a un jsonarray
+				jsonArrayBuilder.add(jsonObjBuilder2);
+			}
+			jsonObjBuilder.add("imagenes", jsonArrayBuilder);
+			JsonObject jsonObj = jsonObjBuilder.build();
+			return Response.status(Response.Status.OK).entity(jsonObj).build();
+		}
+		//return em.createNamedQuery("ImagenOferta.findByOferta", ImagenOferta.class).setParameter("ofertaId", id).getResultList();
 	}
 	
 	@Override

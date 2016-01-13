@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import javax.ejb.Local;
 import javax.json.JsonObject;
+import javax.ws.rs.core.Response;
 
 import model.Comentario;
 import model.Etiqueta;
@@ -33,7 +34,7 @@ public interface OfertaFacade {
 	
 	public List<UsuarioReportaOferta> findReportes(int id);
 	
-	public List<ImagenOferta> findImagenByID(int id);
+	public Response findImagenByID(int id);
 	
 	public Usuario findUsuarioByID(int id);
 	
