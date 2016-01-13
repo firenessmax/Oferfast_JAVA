@@ -15,6 +15,7 @@ import facade.AbstractFacade;
 import facade.OfertaFacade;
 import model.OfertaHasEtiqueta;
 import model.Usuario;
+import model.UsuarioReportaOferta;
 import model.Comentario;
 import model.Etiqueta;
 import model.Oferta;
@@ -75,31 +76,24 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 	}
 	
 	@Override
-	public Oferta editar(Oferta entity, Oferta antigua){
-		if(entity.getUsuarioId() == 0){
-			entity.setUsuarioId(antigua.getUsuarioId());
-		}
-		if(entity.getTitle() == null){
-			entity.setTitle(antigua.getTitle());			
-		}
-		if(entity.getDescription() == null){
-			entity.setDescription(antigua.getDescription());			
-		}
-		if(entity.getPrice() == 0){
-			entity.setPrice(antigua.getPrice());
-		}
-		//ubicacion no deberia editarse, para que asi no puedan publicar ofertas malas
-		entity.setUbicationLon(antigua.getUbicationLon());
-		entity.setUbicationLat(antigua.getUbicationLat());
-		if(entity.getImagesNumber() == 0){
-			entity.setImagesNumber(antigua.getImagesNumber());
-		}
+	public Oferta editar(JsonObject entity, Oferta antigua){
+		//no se puede cambiar usuarioId, asi q se salta
+		try{
+			antigua.setTitle(entity.getString("title"));
+		} catch(Exception e){}
+		try{
+			antigua.setDescription(entity.getString("description"));
+		} catch(Exception e){}
+		try{
+			antigua.setPrice(entity.getInt("price"));
+		} catch(Exception e){}
+		//ubicacion no deberia editarse
+		try{
+			antigua.setImagesNumber(entity.getInt("imagesNumber"));
+		} catch(Exception e){}
 		//date siempre coloca la fecha anterior, xq no deberia poder cambiarse
-		entity.setDate(antigua.getDate());
-		if(entity.getVisibleOferta() == 0){
-			entity.setVisibleOferta(antigua.getVisibleOferta());
-		}
-		return entity;
+		//visible se cambia en editarVisible
+		return antigua;
 	}
 	
 	@Override
@@ -156,8 +150,14 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 	}
 	
 	@Override
-	public Oferta editarDelete(Oferta antigua){
-		antigua.setVisibleOferta(0);
+	public Oferta editarVisible(int numero, Oferta antigua){
+		antigua.setVisibleOferta(numero);
 		return antigua;
+	}
+	
+	@Override
+	public List<UsuarioReportaOferta> findReportes(int id){
+		return em.createNamedQuery("UsuarioReportaOferta.findByIdOferta", UsuarioReportaOferta.class)
+        		.setParameter("ofertaId", id).getResultList();
 	}
 }

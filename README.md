@@ -127,6 +127,16 @@ Es importante colocar la cantidad de imagenes en imagesNumber
 }
 ```
 
+- Modificar oferta que posee etiquetas
+<p>@PUT</p>
+<p>/ofertas/{id}</p>
+```json
+{
+  "title": "title_1", "description": "description_1", "price":1000, "imagesNumber":2,
+  "tags":["tag_1","tag_2","tag_3"]
+}
+```
+
 
 
 

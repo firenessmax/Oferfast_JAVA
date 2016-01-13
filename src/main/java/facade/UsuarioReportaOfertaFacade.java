@@ -2,6 +2,8 @@ package facade;
 
 import java.util.List;
 
+import javax.json.JsonObject;
+
 import model.UsuarioReportaOferta;
 
 public interface UsuarioReportaOfertaFacade {
@@ -17,6 +19,10 @@ public interface UsuarioReportaOfertaFacade {
 	public List<UsuarioReportaOferta> findAll();
 
 	public List<UsuarioReportaOferta> findRange(int[] range);
+	
+	public UsuarioReportaOferta crear(JsonObject entity);
+
+	public UsuarioReportaOferta editar(int id, JsonObject entity);
 
 	public int count();
 

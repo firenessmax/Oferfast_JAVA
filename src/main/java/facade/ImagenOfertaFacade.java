@@ -22,6 +22,8 @@ public interface ImagenOfertaFacade {
 	public List<ImagenOferta> findRange(int[] range);
 	
 	public List<ImagenOferta> addPorOferta(int cantidad, JsonObject entrada, int idOferta);
+	
+	public ImagenOferta editarVisible(int numero, ImagenOferta antiguo);
 
 	public int count();
 

@@ -23,6 +23,7 @@ import facade.UsuarioFacade;
 import model.Comentario;
 import model.Oferta;
 import model.Usuario;
+import model.UsuarioReportaOferta;
 
 @Path("/usuarios")
 public class UsuarioService {
@@ -74,6 +75,13 @@ public class UsuarioService {
     @Produces({"application/xml", "application/json"})
     public List<Oferta> findAllOfertas(@PathParam("id") Integer id) {
         return usuarioFacadeEJB.findAllOfertas(id);
+    }
+	
+    @GET
+    @Path("{id}/reportes") //todas
+    @Produces({"application/xml", "application/json"})
+    public List<UsuarioReportaOferta> findReportes(@PathParam("id") Integer id) {
+        return usuarioFacadeEJB.findReportes(id);
     }
 	
 	@POST
@@ -171,22 +179,18 @@ public class UsuarioService {
     @PUT
     @Path("{id}/visible")
     @Consumes({"application/xml", "application/json"})
-    public void editVisible(@PathParam("id") Integer id, JsonObject entrada) {
+    public Response editVisible(@PathParam("id") Integer id, JsonObject entrada) {
+    	int numero = entrada.getInt("visibleUsuario");
     	Usuario aux = usuarioFacadeEJB.find(id);
-    	aux = usuarioFacadeEJB.editarVisible(entrada, aux);
-    	usuarioFacadeEJB.edit(aux);
-    }
-
-    @PUT
-    @Path("{id}/delete")
-    @Consumes({"application/xml", "application/json"})
-    public Response editDelete(@PathParam("id") Integer id) {
-    	Usuario aux = usuarioFacadeEJB.find(id);
-    	aux = usuarioFacadeEJB.editarDelete(aux);
+    	aux = usuarioFacadeEJB.editarVisible(numero, aux);
     	usuarioFacadeEJB.edit(aux);
     	//respuesta
 		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-		jsonObjBuilder.add("INFO", "Usuario eliminado");
+		if(numero==0){
+			jsonObjBuilder.add("INFO", "Usuario eliminado");
+		} else {
+			jsonObjBuilder.add("INFO", "Usuario visible");
+		}
 		JsonObject jsonObj = jsonObjBuilder.build();
 		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }

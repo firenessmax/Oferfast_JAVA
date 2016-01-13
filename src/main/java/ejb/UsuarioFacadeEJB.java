@@ -15,6 +15,7 @@ import facade.UsuarioFacade;
 import model.Comentario;
 import model.Oferta;
 import model.Usuario;
+import model.UsuarioReportaOferta;
 
 @Stateless
 public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements UsuarioFacade {
@@ -94,14 +95,8 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 	}
 	
 	@Override
-	public Usuario editarVisible(JsonObject datos, Usuario antiguo){
-		antiguo.setVisibleUsuario(datos.getInt("visibleUsuario"));
-		return antiguo;
-	}
-	
-	@Override
-	public Usuario editarDelete(Usuario antiguo){
-		antiguo.setVisibleUsuario(0);
+	public Usuario editarVisible(int numero, Usuario antiguo){
+		antiguo.setVisibleUsuario(numero);
 		return antiguo;
 	}
 	
@@ -168,6 +163,11 @@ public class UsuarioFacadeEJB extends AbstractFacade<Usuario> implements Usuario
 			return Response.status(Response.Status.OK).entity(jsonObj).build();
 			//return elUsuario;
 		}
+	}
+	
+	public List<UsuarioReportaOferta> findReportes(int id){
+		return em.createNamedQuery("UsuarioReportaOferta.findByIdUsuario", UsuarioReportaOferta.class)
+        		.setParameter("usuarioId", id).getResultList();
 	}
 
 }

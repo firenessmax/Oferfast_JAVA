@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 import model.Comentario;
 import model.Oferta;
 import model.Usuario;
+import model.UsuarioReportaOferta;
 
 public interface UsuarioFacade {
 
@@ -24,7 +25,9 @@ public interface UsuarioFacade {
 	public List<Usuario> findRange(int[] range);
 	
 	public List<Oferta> findAllOfertas(int id);
-
+	
+	public List<UsuarioReportaOferta> findReportes(int id);
+	
 	public List<Oferta> findOfertas(int id);
 
 	public List<Comentario> findComentarios(int id);
@@ -33,9 +36,7 @@ public interface UsuarioFacade {
 
 	public Usuario editarSocial(JsonObject datos, Usuario antiguo);
 	
-	public Usuario editarVisible(JsonObject datos, Usuario antiguo);
-	
-	public Usuario editarDelete(Usuario antiguo);
+	public Usuario editarVisible(int numero, Usuario antiguo);
 	
 	public Response login(JsonObject datos);
 	

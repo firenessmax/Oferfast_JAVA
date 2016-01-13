@@ -49,8 +49,8 @@ public class ComentarioFacadeEJB extends AbstractFacade<Comentario> implements C
 	}
 	
 	@Override
-	public Comentario editarDelete(Comentario antiguo){
-		antiguo.setVisibleComentario(0);
+	public Comentario editarVisible(int numero, Comentario antiguo){
+		antiguo.setVisibleComentario(numero);
 		return antiguo;
 	}
 

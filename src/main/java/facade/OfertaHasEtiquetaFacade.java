@@ -22,6 +22,8 @@ public interface OfertaHasEtiquetaFacade {
 	public List<OfertaHasEtiqueta> findRange(int[] range);
 
 	public List<OfertaHasEtiqueta> createByOfertaEtiqueta(Oferta laOferta, JsonArray lista);
+	
+	public List<OfertaHasEtiqueta> findByOferta(Oferta laOferta);
 
 	public int count();
 

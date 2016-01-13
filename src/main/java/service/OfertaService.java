@@ -33,6 +33,7 @@ import model.ImagenOferta;
 import model.Oferta;
 import model.OfertaHasEtiqueta;
 import model.Usuario;
+import model.UsuarioReportaOferta;
 
 @Path("/ofertas")
 public class OfertaService {
@@ -104,6 +105,13 @@ public class OfertaService {
     }
 	
 	@GET
+    @Path("{id}/reportes")
+    @Produces({"application/xml", "application/json"})
+	public List<UsuarioReportaOferta> findReportes(@PathParam("id") Integer id) {
+        return ofertaFacadeEJB.findReportes(id);
+    }
+	
+	@GET
     @Path("{id}/imagenes")
     @Produces({"application/xml", "application/json"})
     public List<ImagenOferta> findImagenes(@PathParam("id") Integer id) {
@@ -151,7 +159,6 @@ public class OfertaService {
 						//respuesta += " "+i+" listaTag(0): "+listaTag.get(i).getName();
 						//se guardan las nuevas etiquetas
 						etiquetaFacadeEJB.create(listaTag.get(i));
-						//aqui muere porque addPorOferta los devvuelve todos
 						//respuesta += " "+i+" listaTag(0): "+listaTag.get(i).getName();
 					}
 				}
@@ -188,35 +195,88 @@ public class OfertaService {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public Response edit(@PathParam("id") Integer id, Oferta entity) {
-    	entity.setOfertaId(id.intValue());
-    	Oferta aux = ofertaFacadeEJB.find(id);
-    	entity = ofertaFacadeEJB.editar(entity, aux);
-    	ofertaFacadeEJB.edit(entity);
+    public Response edit(@PathParam("id") Integer id, JsonObject entrada) {
+    	//String respuesta="";
+    	Oferta antigua = ofertaFacadeEJB.find(id);
+    	antigua = ofertaFacadeEJB.editar(entrada, antigua);
+    	ofertaFacadeEJB.edit(antigua);
     	//agregar editar de etiquetas
-    	/*try{
+    	try{
     		//existen etiquetas
 			if(entrada.getJsonArray("tags").size() > 0){
+				//verificar si existe el tag
+				List<Etiqueta> listaTag = etiquetaFacadeEJB.addPorOferta(entrada.getJsonArray("tags"));
+				if(listaTag.isEmpty() == false){ //hay tags nuevos	
+					//respuesta += " listaTag.size(): "+listaTag.size();
+					for(int i=0; i<listaTag.size(); i++){
+						//se guardan las nuevas etiquetas
+						etiquetaFacadeEJB.create(listaTag.get(i));
+					}
+				}
+				//una vez creadas las etiquetas q no existen, se crean las "conexiones"
+				List<OfertaHasEtiqueta> listaOHAnuevas = ofertaHasEtiquetaFacadeEJB.createByOfertaEtiqueta(antigua, entrada.getJsonArray("tags"));
+				List<OfertaHasEtiqueta> listaOHAexistentes = ofertaHasEtiquetaFacadeEJB.findByOferta(antigua);
+				int buleano=0;
+				//respuesta="*nuevas: "+listaOHAnuevas.size()+" *existentes: "+listaOHAexistentes.size();
+				//respuesta+="borrar";
+				for(int i=0; i<listaOHAexistentes.size(); i++){
+					for(int j=0; j<listaOHAnuevas.size(); j++){
+						//respuesta+="n: "+listaOHAexistentes.get(i).getEtiquetaId()+" - e: "+listaOHAnuevas.get(j).getEtiquetaId();
+						if(listaOHAexistentes.get(i).getEtiquetaId() == listaOHAnuevas.get(j).getEtiquetaId()){
+							j=listaOHAnuevas.size()+1;
+							buleano=1;
+						}
+					}
+					if(buleano == 0){
+						//borrar
+						//respuesta+="\nBorrada la relacion: etiqueta("+listaOHAexistentes.get(i).getEtiquetaId()+") - oferta("+listaOHAexistentes.get(i).getOfertaId()+")";
+						ofertaHasEtiquetaFacadeEJB.remove(listaOHAexistentes.get(i));
+					}
+					buleano = 0;
+				}
+				buleano =0;
+				//respuesta+="creacion";
+				for(int i=0; i<listaOHAnuevas.size(); i++){
+					for(int j=0; j<listaOHAexistentes.size(); j++){
+						//respuesta+="n: "+listaOHAnuevas.get(i).getEtiquetaId()+" - e: "+listaOHAexistentes.get(j).getEtiquetaId();
+						if(listaOHAnuevas.get(i).getEtiquetaId() == listaOHAexistentes.get(j).getEtiquetaId()){
+							j=listaOHAexistentes.size()+1;
+							buleano=1;
+						}
+					}
+					if(buleano == 0){
+						//crear
+						ofertaHasEtiquetaFacadeEJB.create(listaOHAnuevas.get(i));
+						//respuesta+="\nCreada la relacion: etiqueta("+listaOHAnuevas.get(i).getEtiquetaId()+") - oferta("+listaOHAnuevas.get(i).getOfertaId()+")";
+					}
+					buleano =0;
+				}
 				
 			}
-    	} catch(Exception e){}*/
+    	} catch(Exception e){}
     	//respuesta
 		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
 		jsonObjBuilder.add("INFO", "Datos actualizados");
+		//jsonObjBuilder.add("String", respuesta);
 		JsonObject jsonObj = jsonObjBuilder.build();
 		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 
     @PUT
-    @Path("{id}/del")
+    @Path("{id}/visible")
     @Consumes({"application/xml", "application/json"})
-    public Response editDelete(@PathParam("id") Integer id) {
+    public Response editDelete(@PathParam("id") Integer id, JsonObject entrada) {
+    	int numero = entrada.getInt("visibleOferta");
     	Oferta aux = ofertaFacadeEJB.find(id);
-    	aux = ofertaFacadeEJB.editarDelete(aux);
+    	aux = ofertaFacadeEJB.editarVisible(numero, aux);
     	ofertaFacadeEJB.edit(aux);
     	//respuesta
 		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-		jsonObjBuilder.add("INFO", "Oferta eliminada");
+		if(numero == 0){
+			jsonObjBuilder.add("INFO", "Oferta eliminada");
+		} else {
+			jsonObjBuilder.add("INFO", "Oferta visible");
+		}
 		JsonObject jsonObj = jsonObjBuilder.build();
 		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }

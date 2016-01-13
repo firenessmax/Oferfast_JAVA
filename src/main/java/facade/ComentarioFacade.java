@@ -5,6 +5,7 @@ import java.util.List;
 import javax.json.JsonObject;
 
 import model.Comentario;
+import model.Oferta;
 
 public interface ComentarioFacade {
 
@@ -24,7 +25,7 @@ public interface ComentarioFacade {
 	
 	public Comentario editar(int id, JsonObject entity);
 	
-	public Comentario editarDelete(Comentario antiguo);
+	public Comentario editarVisible(int numero, Comentario antiguo);
 
 	public int count();
 

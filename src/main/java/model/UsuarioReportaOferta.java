@@ -7,13 +7,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Usuario_reporta_Oferta")
 @IdClass(UsuarioReportaOfertaPK.class)
-@NamedQuery(name="UsuarioReportaOferta.findAll", query="SELECT uro FROM UsuarioReportaOferta uro")
+@NamedQueries({
+	@NamedQuery(name="UsuarioReportaOferta.findAll", query="SELECT uro FROM UsuarioReportaOferta uro"),
+	@NamedQuery(name="UsuarioReportaOferta.findByIdUsuario", query="SELECT uro FROM UsuarioReportaOferta uro WHERE uro.usuarioId = :usuarioId"),
+	@NamedQuery(name="UsuarioReportaOferta.findByIdOferta", query="SELECT uro FROM UsuarioReportaOferta uro WHERE uro.ofertaId = :ofertaId"),
+	@NamedQuery(name="UsuarioReportaOferta.findByIdDate", query="SELECT uro FROM UsuarioReportaOferta uro WHERE uro.date = :date"),
+	@NamedQuery(name="UsuarioReportaOferta.findByIdText", query="SELECT uro FROM UsuarioReportaOferta uro WHERE uro.text = :text")
+})
+
 public class UsuarioReportaOferta implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -28,8 +36,8 @@ public class UsuarioReportaOferta implements Serializable {
 	@Column(name="date", nullable=false)
 	private Timestamp date;
 
-	@Column(name="description", nullable=false, length=500)
-	private String description;
+	@Column(name="text", nullable=false, length=500)
+	private String text;
 
 	public UsuarioReportaOferta() {
 	}
@@ -58,12 +66,12 @@ public class UsuarioReportaOferta implements Serializable {
 		this.date = date;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getText() {
+		return text;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setText(String text) {
+		this.text = text;
 	}	
 	
 	

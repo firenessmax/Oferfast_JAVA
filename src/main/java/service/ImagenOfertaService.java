@@ -20,6 +20,7 @@ import facade.ImagenOfertaFacade;
 import facade.OfertaFacade;
 import model.ImagenOferta;
 import model.Oferta;
+import model.Usuario;
 
 @Path("/imagenes")
 public class ImagenOfertaService {
@@ -78,6 +79,25 @@ public class ImagenOfertaService {
     public void edit(@PathParam("id") Integer id, ImagenOferta entity) {
     	entity.setImagenOfertaId(id.intValue());
     	imagenOfertaFacadeEJB.edit(entity);
+    }
+
+    @PUT
+    @Path("{id}/visible")
+    @Consumes({"application/xml", "application/json"})
+    public Response editVisible(@PathParam("id") Integer id, JsonObject entrada) {
+    	int numero = entrada.getInt("visibleImagen");
+    	ImagenOferta aux = imagenOfertaFacadeEJB.find(id);
+    	aux = imagenOfertaFacadeEJB.editarVisible(numero, aux);
+    	imagenOfertaFacadeEJB.edit(aux);
+    	//respuesta
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		if(numero==0){
+			jsonObjBuilder.add("INFO", "Imagen eliminada");
+		} else {
+			jsonObjBuilder.add("INFO", "Imagen visible");
+		}
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 	
 	

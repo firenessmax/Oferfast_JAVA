@@ -10,6 +10,7 @@ import model.Etiqueta;
 import model.ImagenOferta;
 import model.Oferta;
 import model.Usuario;
+import model.UsuarioReportaOferta;
 
 @Local
 public interface OfertaFacade {
@@ -30,11 +31,13 @@ public interface OfertaFacade {
 	
 	public List<Comentario> findComentarios(int id);
 	
+	public List<UsuarioReportaOferta> findReportes(int id);
+	
 	public List<ImagenOferta> findImagenByID(int id);
 	
 	public Usuario findUsuarioByID(int id);
 	
-	public Oferta editar(Oferta entity, Oferta antigua);
+	public Oferta editar(JsonObject entity, Oferta antigua);
 	
 	public Oferta crear(JsonObject entity);
 
@@ -44,7 +47,7 @@ public interface OfertaFacade {
 
 	public Oferta findByOferta(Oferta entity);
 	
-	public Oferta editarDelete(Oferta antigua);
+	public Oferta editarVisible(int numero, Oferta antigua);
 
 	public int count();
 }

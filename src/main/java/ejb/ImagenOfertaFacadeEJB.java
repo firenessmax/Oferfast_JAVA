@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import facade.AbstractFacade;
 import facade.ImagenOfertaFacade;
 import model.ImagenOferta;
+import model.Usuario;
 
 @Stateless
 public class ImagenOfertaFacadeEJB extends AbstractFacade<ImagenOferta> implements ImagenOfertaFacade {
@@ -42,5 +43,11 @@ public class ImagenOfertaFacadeEJB extends AbstractFacade<ImagenOferta> implemen
 			lista.add(io);
 		}
 		return lista;
+	}
+	
+	@Override
+	public ImagenOferta editarVisible(int numero, ImagenOferta antiguo){
+		antiguo.setVisibleImagen(numero);
+		return antiguo;
 	}
 }

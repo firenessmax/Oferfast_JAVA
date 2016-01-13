@@ -44,5 +44,11 @@ public class OfertaHasEtiquetaFacadeEJB extends AbstractFacade<OfertaHasEtiqueta
 		}
 		return laLista;
 	}
+	
+	@Override
+	public List<OfertaHasEtiqueta> findByOferta(Oferta laOferta){
+		return em.createNamedQuery("OfertaHasEtiqueta.findEtiquetaByOferta", OfertaHasEtiqueta.class)
+				.setParameter("ofertaId", laOferta.getOfertaId()).getResultList();
+	}
 
 }

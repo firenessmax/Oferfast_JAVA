@@ -56,21 +56,31 @@ public class ComentarioService {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Integer id, JsonObject entity) {
+    public Response edit(@PathParam("id") Integer id, JsonObject entity) {
     	Comentario comment = comentarioFacadeEJB.editar(id.intValue(), entity);
     	comentarioFacadeEJB.edit(comment);
+    	//respuesta
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		jsonObjBuilder.add("INFO", "Datos actualizados");
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
 
     @PUT
-    @Path("{id}/delete")
+    @Path("{id}/visible")
     @Consumes({"application/xml", "application/json"})
-    public Response editDelete(@PathParam("id") Integer id) {
+    public Response editVisible(@PathParam("id") Integer id, JsonObject entrada) {
+    	int numero = entrada.getInt("visibleComentario");
     	Comentario aux = comentarioFacadeEJB.find(id);
-    	aux = comentarioFacadeEJB.editarDelete(aux);
+    	aux = comentarioFacadeEJB.editarVisible(numero, aux);
     	comentarioFacadeEJB.edit(aux);
     	//respuesta
 		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-		jsonObjBuilder.add("INFO", "Comentario eliminado");
+		if(numero==0){
+			jsonObjBuilder.add("INFO", "Comentario eliminado");
+		} else {
+			jsonObjBuilder.add("INFO", "Comentario visible");
+		}
 		JsonObject jsonObj = jsonObjBuilder.build();
 		return Response.status(Response.Status.OK).entity(jsonObj).build();
     }
