@@ -245,6 +245,7 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 		jsonObjBuilder.add("ubicationLon", entity.getUbicationLon());
 		jsonObjBuilder.add("ubicationLat", entity.getUbicationLat());
 		jsonObjBuilder.add("date", entity.getDate().toString());
+		jsonObjBuilder.add("ofertaId", entity.getOfertaId());
 		jsonObjBuilder.add("usuarioId", entity.getUsuarioId());
 		//datos del usuario
 		JsonObjectBuilder jsonObjBuilderUser = Json.createObjectBuilder();
