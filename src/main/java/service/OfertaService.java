@@ -27,6 +27,7 @@ import facade.EtiquetaFacade;
 import facade.ImagenOfertaFacade;
 import facade.OfertaFacade;
 import facade.OfertaHasEtiquetaFacade;
+import facade.UsuarioLikeComentarioFacade;
 import model.Comentario;
 import model.Etiqueta;
 import model.ImagenOferta;
@@ -49,6 +50,9 @@ public class OfertaService {
 	
 	@EJB 
 	ImagenOfertaFacade imagenOfertaFacadeEJB;
+	
+	@EJB
+	UsuarioLikeComentarioFacade usuarioLikeComentarioFacadeEJB;
 	
 	
 	Logger logger = Logger.getLogger(OfertaService.class.getName());
@@ -86,8 +90,12 @@ public class OfertaService {
 	@GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Oferta find(@PathParam("id") Integer id) {
-        return ofertaFacadeEJB.find(id);
+	//public Oferta find(@PathParam("id") Integer id) {
+	public Response find(@PathParam("id") Integer id) {
+		Oferta laOferta = ofertaFacadeEJB.find(id);
+		List<ImagenOferta> listaImagenes = ofertaFacadeEJB.findImagenes(id);
+        //return ofertaFacadeEJB.find(id);
+		return ofertaFacadeEJB.findOferta(laOferta, listaImagenes);
     }	
 	
 	@GET
@@ -100,8 +108,8 @@ public class OfertaService {
 	@GET
     @Path("{id}/comentarios")
     @Produces({"application/xml", "application/json"})
-	public List<Comentario> findComentarios(@PathParam("id") Integer id) {
-        return ofertaFacadeEJB.findComentarios(id);
+	public Response findComentarios(@PathParam("id") Integer id) {
+        return ofertaFacadeEJB.findComentariosLikes(id);
     }
 	
 	@GET

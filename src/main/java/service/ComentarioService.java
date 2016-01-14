@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import facade.ComentarioFacade;
 import model.Comentario;
 import model.Usuario;
+import model.UsuarioLikeComentario;
 
 @Path("/comentarios")
 public class ComentarioService {
@@ -32,13 +33,31 @@ public class ComentarioService {
 	@Produces({"application/xml", "application/json"})
 	public List<Comentario> findAll(){
 		return comentarioFacadeEJB.findAll();
-	}
-	
+	}	
+
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Comentario find(@PathParam("id") Integer id) {
-        return comentarioFacadeEJB.find(id);
+    public Response find(@PathParam("id") Integer id) {
+    	Comentario comment = comentarioFacadeEJB.find(id);
+    	List<UsuarioLikeComentario> likes = comentarioFacadeEJB.findLikes(id);
+    	List<UsuarioLikeComentario> dislikes = comentarioFacadeEJB.findDislikes(id);
+        //return comentarioFacadeEJB.find(id);
+    	return comentarioFacadeEJB.findComentario(comment, likes, dislikes);
+    }
+    
+    @GET
+    @Path("{id}/likes")
+    @Produces({"application/xml", "application/json"})
+    public List<UsuarioLikeComentario> findLikes(@PathParam("id") Integer id) {
+        return comentarioFacadeEJB.findLikes(id);
+    }
+    
+    @GET
+    @Path("{id}/dislikes")
+    @Produces({"application/xml", "application/json"})
+    public List<UsuarioLikeComentario> findDislikes(@PathParam("id") Integer id) {
+        return comentarioFacadeEJB.findDislikes(id);
     }
 	
 	@POST

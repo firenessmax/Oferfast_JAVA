@@ -11,6 +11,7 @@ import model.Etiqueta;
 import model.ImagenOferta;
 import model.Oferta;
 import model.Usuario;
+import model.UsuarioLikeComentario;
 import model.UsuarioReportaOferta;
 
 @Local
@@ -33,8 +34,12 @@ public interface OfertaFacade {
 	public List<Comentario> findComentarios(int id);
 	
 	public List<UsuarioReportaOferta> findReportes(int id);
-	
+
 	public Response findImagenByID(int id);
+	
+	public List<ImagenOferta> findImagenes(int id);
+	
+	public Response findOferta(Oferta entity, List<ImagenOferta> listaImagenes);
 	
 	public Usuario findUsuarioByID(int id);
 	
@@ -49,6 +54,8 @@ public interface OfertaFacade {
 	public Oferta findByOferta(Oferta entity);
 	
 	public Oferta editarVisible(int numero, Oferta antigua);
+	
+	public Response findComentariosLikes(int id);
 
 	public int count();
 }

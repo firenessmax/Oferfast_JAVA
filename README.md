@@ -52,7 +52,19 @@ Ofertas
 <p>/oferta/{id}</p>
 ```json
 {
-    "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
+  "title": "Comida Rapida", "description": "Gran oferta de comida rapida", "price": 3500, "ubicationLon": -12.64595, "ubicationLat": -10.98814, "date": "2016-01-12 17:45:27.0", "usuarioId": 1, 
+  "usuario": {
+    "usuarioId": 1, "username": "Colorado", "urlProfileThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+  },
+  "imagesNumber": 2,
+  "imagenMain": {
+    "urlNormal": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg", "urlThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+  },
+  "imagenes": [
+    {
+      "urlNormal": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg", "urlThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+    }
+  ]
 }
 ```
 
@@ -110,13 +122,14 @@ devuelve un Json como el siguiente:
 <p>@GET</p>
 <p>/usuarios/{id}/comentarios</p>
 ```json
-[
-  {
-    "comentarioId": 1, "date": "2016-01-12T12:05:42.57", "ofertaId": 1, "text": "buena la oferta, gracias","usuarioId": 1, "visibleComentario": 1
-  },{
-    "comentarioId": 2, "date": "2016-01-12T12:06:19.882", "ofertaId": 1, "text": "gracias", "usuarioId": 3, "visibleComentario": 1
-  }
-]
+{
+  "ofertaId": 2, "cantidad": 1, 
+  "comentarios": [
+    {
+      "text": "No me Gusto mucho la oferta!", "date": "2016-01-12 17:48:34.0", "usuarioId": 2, "ofertaId": 2, "comentarioId": 2, "visibleComentario": 1, "cantidadLikes": 1, "likes": [ 1 ], "cantidadDislikes": 0, "dislikes": []
+    }
+  ]
+}
 ```
 
 - Escribir oferta
@@ -442,8 +455,30 @@ Comentarios
 <p>/comentarios/{id}</p>
 ```json
 {
-  "comentarioId": 1, "date": "2016-01-12T12:05:42.57", "ofertaId": 1, "text": "buena la oferta, gracias", "usuarioId": 1, "visibleComentario": 1
+  "text": "No me Gusto mucho la oferta!", "date": "2016-01-12 17:48:34.0", "usuarioId": 2, "ofertaId": 2, "visibleComentario": 1, "cantidadLikes": 1, "likes": [ 1 ], "cantidadDislikes": 0, "dislikes": []
 }
+```
+
+- Obtener un likes de un comentario
+<p>@GET</p>
+<p>/comentarios/{id}/likes</p>
+```json
+[
+  {
+    "comentarioId": 2, "positive": 1, "usuarioId": 1
+  }
+]
+```
+
+- Obtener un dislikes de un comentario
+<p>@GET</p>
+<p>/comentarios/{id}/dislikes</p>
+```json
+[
+  {
+    "comentarioId": 2, "positive": 1, "usuarioId": 1
+  }
+]
 ```
 
 - Agregar un comentario
@@ -459,3 +494,50 @@ Comentarios
 
 
 
+
+
+
+Usuario Like Comentario
+--------
+
+- Obtener una lista de likes
+<p>@GET</p>
+<p>/likes</p>
+```json
+[
+  {
+    "comentarioId": 2, "positive": 1, "usuarioId": 1
+  },{
+    "comentarioId": 3, "positive": 1, "usuarioId": 2
+  },{
+    "comentarioId": 4, "positive": 1, "usuarioId": 3
+  },
+]
+```
+
+- Crear un like
+<p>@POST</p>
+<p>/likes/like</p>
+```json
+{
+    "usuarioId":1, "comentarioId":3
+}
+```
+
+- Crear un dislike
+<p>@POST</p>
+<p>/likes/dislike</p>
+```json
+{
+    "usuarioId":1, "comentarioId":3
+}
+```
+
+- Borrar un like/dislike
+<p>@POST</p>
+<p>/likes/unlike</p>
+```json
+{
+    "usuarioId":1, "comentarioId":3
+}
+```

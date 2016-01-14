@@ -101,7 +101,7 @@ public class Comentario implements Serializable {
 		this.date = date;
 	}
 
-	public int isVisibleComentario() {
+	public int getVisibleComentario() {
 		return visibleComentario;
 	}
 

@@ -19,6 +19,7 @@ import facade.AbstractFacade;
 import facade.OfertaFacade;
 import model.OfertaHasEtiqueta;
 import model.Usuario;
+import model.UsuarioLikeComentario;
 import model.UsuarioReportaOferta;
 import model.Comentario;
 import model.Etiqueta;
@@ -74,7 +75,6 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 				JsonObjectBuilder jsonObjBuilder2 = Json.createObjectBuilder();
 				jsonObjBuilder2.add("urlNormal", lista.get(i).getUrlNormal());
 				jsonObjBuilder2.add("urlThumbnail", lista.get(i).getUrlThumbnail());
-				//agregar a un jsonarray
 				jsonArrayBuilder.add(jsonObjBuilder2);
 			}
 			jsonObjBuilder.add("imagenes", jsonArrayBuilder);
@@ -82,6 +82,12 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 			return Response.status(Response.Status.OK).entity(jsonObj).build();
 		}
 		//return em.createNamedQuery("ImagenOferta.findByOferta", ImagenOferta.class).setParameter("ofertaId", id).getResultList();
+	}
+	
+	@Override
+	public List<ImagenOferta> findImagenes(int id){
+		return em.createNamedQuery("ImagenOferta.findByOferta", ImagenOferta.class).setParameter("ofertaId", id).getResultList();
+		
 	}
 	
 	@Override
@@ -168,6 +174,51 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 	}
 
 	@Override
+	public Response findComentariosLikes(int id){
+		JsonObjectBuilder respuesta = Json.createObjectBuilder();
+		respuesta.add("ofertaId", id);
+		List<Comentario> comments = em.createNamedQuery("Comentario.findByOfertaVisible", Comentario.class)
+        		.setParameter("ofertaId", id).setParameter("visibleComentario", 1).getResultList();
+		respuesta.add("cantidad", comments.size());
+		JsonArrayBuilder losComentarios = Json.createArrayBuilder();
+		for(int i=0; i<comments.size();i++){
+			JsonObjectBuilder unComentario = Json.createObjectBuilder();
+			unComentario.add("text", comments.get(i).getText());
+			unComentario.add("date", comments.get(i).getDate().toString());
+			unComentario.add("usuarioId", comments.get(i).getUsuarioId());
+			unComentario.add("ofertaId", comments.get(i).getOfertaId());
+			unComentario.add("comentarioId", comments.get(i).getComentarioId());
+			unComentario.add("visibleComentario", comments.get(i).getVisibleComentario());
+			
+			//se buscan los likes y dislikes de ese comentario
+	    	List<UsuarioLikeComentario> likes = em.createNamedQuery("UsuarioLikeComentario.findByComentarioPositive", UsuarioLikeComentario.class)
+	        		.setParameter("comentarioId", comments.get(i).getComentarioId()).setParameter("positive", 1).getResultList();
+	    	List<UsuarioLikeComentario> dislikes = em.createNamedQuery("UsuarioLikeComentario.findByComentarioPositive", UsuarioLikeComentario.class)
+	        		.setParameter("comentarioId", comments.get(i).getComentarioId()).setParameter("positive", 0).getResultList();
+
+			//likes
+	    	unComentario.add("cantidadLikes", likes.size());
+			JsonArrayBuilder jsonArrayBuilderLikes = Json.createArrayBuilder();
+			for(int j=0; j<likes.size(); j++){
+				jsonArrayBuilderLikes.add(likes.get(j).getUsuarioId());
+			}
+			unComentario.add("likes", jsonArrayBuilderLikes);
+			//dislikes
+			unComentario.add("cantidadDislikes", dislikes.size());
+			JsonArrayBuilder jsonArrayBuilderDislikes = Json.createArrayBuilder();
+			for(int j=0; j<dislikes.size(); j++){
+				jsonArrayBuilderDislikes.add(dislikes.get(j).getUsuarioId());
+			}
+			unComentario.add("dislikes", jsonArrayBuilderDislikes);
+			losComentarios.add(unComentario);
+		}
+		respuesta.add("comentarios", losComentarios);
+		
+		JsonObject jsonObj = respuesta.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
+	}
+
+	@Override
 	public List<Comentario> findComentarios(int id){
 		return em.createNamedQuery("Comentario.findByOfertaVisible", Comentario.class)
         		.setParameter("ofertaId", id).setParameter("visibleComentario", 1).getResultList();
@@ -183,5 +234,46 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 	public List<UsuarioReportaOferta> findReportes(int id){
 		return em.createNamedQuery("UsuarioReportaOferta.findByIdOferta", UsuarioReportaOferta.class)
         		.setParameter("ofertaId", id).getResultList();
+	}
+	
+	@Override
+	public Response findOferta(Oferta entity, List<ImagenOferta> listaImagenes){
+		JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+		jsonObjBuilder.add("title", entity.getTitle());
+		jsonObjBuilder.add("description", entity.getDescription());
+		jsonObjBuilder.add("price", entity.getPrice());
+		jsonObjBuilder.add("ubicationLon", entity.getUbicationLon());
+		jsonObjBuilder.add("ubicationLat", entity.getUbicationLat());
+		jsonObjBuilder.add("date", entity.getDate().toString());
+		jsonObjBuilder.add("usuarioId", entity.getUsuarioId());
+		//datos del usuario
+		JsonObjectBuilder jsonObjBuilderUser = Json.createObjectBuilder();
+		jsonObjBuilderUser.add("usuarioId", entity.getUsuario().getUsuarioId());
+		jsonObjBuilderUser.add("username", entity.getUsuario().getUsername());
+		jsonObjBuilderUser.add("urlProfileThumbnail", entity.getUsuario().getUrlProfileThumbnail());
+		jsonObjBuilder.add("usuario", jsonObjBuilderUser);
+		//datos de las imagenes
+		jsonObjBuilder.add("imagesNumber", entity.getImagesNumber());
+		if(listaImagenes.isEmpty()){
+			jsonObjBuilder.add("INFO", "la oferta no posee imagenes");
+		} else {
+			JsonObjectBuilder jsonObjBuilderImageMain = Json.createObjectBuilder();
+			jsonObjBuilderImageMain.add("urlNormal", listaImagenes.get(0).getUrlNormal());
+			jsonObjBuilderImageMain.add("urlThumbnail", listaImagenes.get(0).getUrlThumbnail());
+			jsonObjBuilder.add("imagenMain", jsonObjBuilderImageMain);
+			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+			for(int i=0; i<listaImagenes.size(); i++){
+				JsonObjectBuilder jsonObjBuilderImages = Json.createObjectBuilder();
+				jsonObjBuilderImages.add("urlNormal", listaImagenes.get(i).getUrlNormal());
+				jsonObjBuilderImages.add("urlThumbnail", listaImagenes.get(i).getUrlThumbnail());
+				jsonArrayBuilder.add(jsonObjBuilderImages);
+			}
+			jsonObjBuilder.add("imagenes", jsonArrayBuilder);
+		}
+		JsonObject jsonObj = jsonObjBuilder.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
+		//JsonObjectBuilder jsonObjBuilderUser = Json.createObjectBuilder();
+		
+		
 	}
 }

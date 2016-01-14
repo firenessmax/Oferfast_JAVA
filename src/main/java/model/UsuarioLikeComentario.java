@@ -7,12 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.NamedQuery;
+import javax.persistence.NamedQueries;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Usuario_like_Comentario")
 @IdClass(UsuarioLikeComentarioPK.class)
-@NamedQuery(name="UsuarioLikeComentario.findAll", query="SELECT ulc FROM UsuarioLikeComentario ulc")
+@NamedQueries({
+	@NamedQuery(name="UsuarioLikeComentario.findAll", query="SELECT ulc FROM UsuarioLikeComentario ulc"),
+	@NamedQuery(name="UsuarioLikeComentario.findByUsuario", query="SELECT ulc FROM UsuarioLikeComentario ulc WHERE ulc.usuarioId = :usuarioId"),
+	@NamedQuery(name="UsuarioLikeComentario.findByComentario", query="SELECT ulc FROM UsuarioLikeComentario ulc WHERE ulc.comentarioId = :comentarioId"),
+
+	@NamedQuery(name="UsuarioLikeComentario.findByComentarioPositive", query="SELECT ulc FROM UsuarioLikeComentario ulc WHERE ulc.comentarioId = :comentarioId AND ulc.positive = :positive"),
+	
+	@NamedQuery(name="UsuarioLikeComentario.findByComentarioUsuario", query="SELECT ulc FROM UsuarioLikeComentario ulc WHERE ulc.comentarioId = :comentarioId AND ulc.usuarioId = :usuarioId")
+})
+
 public class UsuarioLikeComentario implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
