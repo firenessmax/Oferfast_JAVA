@@ -3,6 +3,7 @@ package facade;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.ejb.Local;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
@@ -47,7 +48,7 @@ public interface OfertaFacade {
 	
 	public Oferta crear(JsonObject entity);
 
-	public List<Oferta> findAllVisible(int sino);
+	public Response findAllVisible(int sino);
 
 	public Oferta findByLonLat(Double Lon, Double Lat);
 

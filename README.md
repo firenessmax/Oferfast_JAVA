@@ -14,12 +14,37 @@ Ofertas
 <p>@GET</p>
 <p>/ofertas</p>
 ```json
-[{
-    "date": "2016-01-06T21:21:47.987938", "description": "description_1", "imagesNumber": 0, "ofertaId": 1, "price": 100, "title": "title_1", "ubicationLat": 510, "ubicationLon": 3200, "usuarioId": 1, "visibleOferta": 1
-  },
+[
   {
-    "date": "2016-01-06T21:22:06.208709", "description": "description_2", "imagesNumber": 0, "ofertaId": 2, "price": 1000, "title": "title_2", "ubicationLat": 50, "ubicationLon": 200, "usuarioId": 1, "visibleOferta": 1
-  }]
+    "title": "Comida Rapida", "description": "Gran oferta de comida rapida", "price": 3500, "ubicationLon": -12.64595, "ubicationLat": -10.98814, "date": "2016-01-12 17:45:27.0", "ofertaId": 1, "usuarioId": 1,
+    "usuario": {
+      "usuarioId": 1, "username": "Colorado", "urlProfileThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+    },
+    "imagesNumber": 2,
+    "imagenMain": {
+      "urlNormal": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg", "urlThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+    },
+    "imagenes": [
+      {
+        "urlNormal": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg", "urlThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+      }
+    ]
+  },{
+    "title": "Perforaciones accesibles", "description": "oferta para perforaciones a muy buen precio", "price": 2500, "ubicationLon": -47.23792, "ubicationLat": 69.70628, "date": "2016-01-12 17:45:27.0", "ofertaId": 2, "usuarioId": 2,
+    "usuario": {
+      "usuarioId": 2, "username": "Perry", "urlProfileThumbnail": "http://novakasaviviendas.com/wp-content/uploads/2015/07/oferta-especial.gif"
+    },
+    "imagesNumber": 3,
+    "imagenMain": {
+      "urlNormal": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg", "urlThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+    },
+    "imagenes": [
+      {
+        "urlNormal": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg", "urlThumbnail": "http://www.grupoacre.com/admin/resources/productos/fotos/45443/ofertas.jpg"
+      }
+    ]
+  }
+]
 ```
 
 - Obtener una lista de ofertas no visibles
@@ -92,17 +117,6 @@ Ofertas
 <p>@GET</p>
 <p>/oferta/{id}/imagenes</p>
 ```json
-[
-  {
-    "imagenOfertaId": 14, "ofertaId": 23, "urlNormal": "urlNormal_23", "urlThumbnail": "urlThumbnail_23", "visibleImagen": 1
-  },
-  {
-    "imagenOfertaId": 15, "ofertaId": 23, "urlNormal": "urlNormal_23_2", "urlThumbnail": "urlThumbnail_23_2", "visibleImagen": 1
-  }
-]
-```
-devuelve un Json como el siguiente:
-```json
 {
   "ofertaId":23,
   "imagenes":
@@ -117,7 +131,6 @@ devuelve un Json como el siguiente:
 }
 ```
 
-
 - Obtener los comentarios de una oferta
 <p>@GET</p>
 <p>/usuarios/{id}/comentarios</p>
@@ -126,7 +139,7 @@ devuelve un Json como el siguiente:
   "ofertaId": 2, "cantidad": 1, 
   "comentarios": [
     {
-      "text": "No me Gusto mucho la oferta!", "date": "2016-01-12 17:48:34.0", "usuarioId": 2, "ofertaId": 2, "comentarioId": 2, "visibleComentario": 1, "cantidadLikes": 1, "likes": [ 1 ], "cantidadDislikes": 0, "dislikes": []
+      "text": "No me Gusto mucho la oferta!", "date": "2016-01-12 17:48:34.0", "usuarioId": 2, "username": "Colorado", "ofertaId": 2, "comentarioId": 2, "visibleComentario": 1, "cantidadLikes": 1, "likes": [ 1 ], "cantidadDislikes": 0, "dislikes": []
     }
   ]
 }

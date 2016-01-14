@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
@@ -74,17 +75,21 @@ public class OfertaService {
 	
 	@GET	//solo los visibles
     @Produces({"application/xml", "application/json"})
-	public List<Oferta> findAllVisible(){
+	/*public List<Oferta> findAllVisible(){
 		List<Oferta> lista = ofertaFacadeEJB.findAllVisible(1);
-		return lista;
+		return lista;*/
+	public Response findAllVisible(){
+		return ofertaFacadeEJB.findAllVisible(1);
 	}
 	
 	@GET	//los no visibles
 	@Path("/notVisible")
     @Produces({"application/xml", "application/json"})
-	public List<Oferta> findAllNotVisible(){
+	/*public List<Oferta> findAllNotVisible(){
 		List<Oferta> lista = ofertaFacadeEJB.findAllVisible(0);
-		return lista;
+		return lista;*/
+	public Response findAllNotVisible(){
+		return ofertaFacadeEJB.findAllVisible(0);
 	}
 	
 	@GET

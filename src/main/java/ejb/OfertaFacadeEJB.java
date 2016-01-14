@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -86,7 +87,8 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 	
 	@Override
 	public List<ImagenOferta> findImagenes(int id){
-		return em.createNamedQuery("ImagenOferta.findByOferta", ImagenOferta.class).setParameter("ofertaId", id).getResultList();
+		return em.createNamedQuery("ImagenOferta.findByOferta", ImagenOferta.class)
+				.setParameter("ofertaId", id).getResultList();
 		
 	}
 	
@@ -151,9 +153,56 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 	}
 	
 	@Override
-	public List<Oferta> findAllVisible(int sino){
-		return em.createNamedQuery("Oferta.findByVisible", Oferta.class)
+	public Response findAllVisible(int sino){
+		List<Oferta> listaOfertas = em.createNamedQuery("Oferta.findByVisible", Oferta.class)
 			.setParameter("visibleOferta", sino).getResultList();
+		JsonArrayBuilder respuesta = Json.createArrayBuilder();
+		for(int i=0; i<listaOfertas.size(); i++){
+			List<ImagenOferta> listaImagenes = this.findImagenes(listaOfertas.get(i).getOfertaId());
+			JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+			jsonObjBuilder.add("title", listaOfertas.get(i).getTitle());
+			jsonObjBuilder.add("description", listaOfertas.get(i).getDescription());
+			jsonObjBuilder.add("price", listaOfertas.get(i).getPrice());
+			jsonObjBuilder.add("ubicationLon", listaOfertas.get(i).getUbicationLon());
+			jsonObjBuilder.add("ubicationLat", listaOfertas.get(i).getUbicationLat());
+			jsonObjBuilder.add("date", listaOfertas.get(i).getDate().toString());
+			jsonObjBuilder.add("ofertaId", listaOfertas.get(i).getOfertaId());
+			jsonObjBuilder.add("usuarioId", listaOfertas.get(i).getUsuarioId());
+			//datos del usuario
+			JsonObjectBuilder jsonObjBuilderUser = Json.createObjectBuilder();
+			jsonObjBuilderUser.add("usuarioId", listaOfertas.get(i).getUsuario().getUsuarioId());
+			jsonObjBuilderUser.add("username", listaOfertas.get(i).getUsuario().getUsername());
+			jsonObjBuilderUser.add("urlProfileThumbnail", listaOfertas.get(i).getUsuario().getUrlProfileThumbnail());
+			jsonObjBuilder.add("usuario", jsonObjBuilderUser);
+			//datos de las imagenes
+			jsonObjBuilder.add("imagesNumber", listaOfertas.get(i).getImagesNumber());
+			if(listaImagenes.isEmpty()){
+				jsonObjBuilder.add("INFO", "la oferta no posee imagenes");
+			} else {
+				JsonObjectBuilder jsonObjBuilderImageMain = Json.createObjectBuilder();
+				jsonObjBuilderImageMain.add("urlNormal", listaImagenes.get(0).getUrlNormal());
+				jsonObjBuilderImageMain.add("urlThumbnail", listaImagenes.get(0).getUrlThumbnail());
+				jsonObjBuilder.add("imagenMain", jsonObjBuilderImageMain);
+				JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+				for(int j=0; j<listaImagenes.size(); j++){
+					JsonObjectBuilder jsonObjBuilderImages = Json.createObjectBuilder();
+					jsonObjBuilderImages.add("urlNormal", listaImagenes.get(j).getUrlNormal());
+					jsonObjBuilderImages.add("urlThumbnail", listaImagenes.get(j).getUrlThumbnail());
+					jsonArrayBuilder.add(jsonObjBuilderImages);
+				}
+				jsonObjBuilder.add("imagenes", jsonArrayBuilder);
+			}
+			respuesta.add(jsonObjBuilder);
+		}
+		/*JsonObjectBuilder laRespuesta = Json.createObjectBuilder();
+		laRespuesta.add("ofertas",respuesta);
+		JsonObject jsonObj = laRespuesta.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();*/
+		JsonArray jsonObj = respuesta.build();
+		return Response.status(Response.Status.OK).entity(jsonObj).build();
+		//return respuesta;
+		
+		
 	}
 	
 	@Override
@@ -186,6 +235,7 @@ public class OfertaFacadeEJB extends AbstractFacade<Oferta> implements OfertaFac
 			unComentario.add("text", comments.get(i).getText());
 			unComentario.add("date", comments.get(i).getDate().toString());
 			unComentario.add("usuarioId", comments.get(i).getUsuarioId());
+			unComentario.add("username", comments.get(i).getUsuario().getUsername());
 			unComentario.add("ofertaId", comments.get(i).getOfertaId());
 			unComentario.add("comentarioId", comments.get(i).getComentarioId());
 			unComentario.add("visibleComentario", comments.get(i).getVisibleComentario());
